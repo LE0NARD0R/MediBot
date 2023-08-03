@@ -1,0 +1,33 @@
+[handleMsg]:  {
+  key: {
+    remoteJid: '573017789134@s.whatsapp.net',
+    fromMe: false,
+    id: '3AEABFEC76045D969F21',
+    participant: undefined
+  },
+  messageTimestamp: 1691034552,
+  pushName: 'Leonardo Rodriguez',
+  broadcast: false,
+  message: Message {
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/13742185_3517236285212562_7206218908308243682_n.enc?ccb=11-4&oh=01_AdRdFuHcFBxeQcCMAMXviSu042yuSD_E9ONyyC-y-YNxfQ&oe=64F28007&mms3=true',
+      mimetype: 'audio/ogg; codecs=opus',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      seconds: 5,
+      ptt: true,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7117-24/13742185_3517236285212562_7206218908308243682_n.enc?ccb=11-4&oh=01_AdRdFuHcFBxeQcCMAMXviSu042yuSD_E9ONyyC-y-YNxfQ&oe=64F28007',
+      mediaKeyTimestamp: [Long],
+      streamingSidecar: [Uint8Array],
+      waveform: [Uint8Array]
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_voice_note__c673a771-4cdc-4224-be7f-0f36afe20226',
+  from: '573017789134'
+}
