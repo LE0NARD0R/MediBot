@@ -1,5 +1,7 @@
 .env
-base-baileys-memory/tmp/
-base-baileys-memory/bot_sessions
-node_modules
+bot_sessions
+*.mp3
+*.ogg
 COSAS.md
+package-lock.json
+bot.qr.png
