@@ -1,7 +1,7 @@
 .env
-bot_sessions
 *.mp3
 *.ogg
+*.txt
 COSAS.md
 package-lock.json
 bot.qr.png
