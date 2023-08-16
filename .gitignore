@@ -1,0 +1,4 @@
+.env
+base-baileys-memory/tmp/
+base-baileys-memory/bot_sessions
+node_modules
