@@ -1,0 +1,7 @@
+.env
+bot_sessions
+*.mp3
+*.ogg
+COSAS.md
+package-lock.json
+bot.qr.png
