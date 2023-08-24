@@ -2,6 +2,7 @@
 *.mp3
 *.ogg
 *.txt
+*.opus
 COSAS.md
 package-lock.json
 bot.qr.png

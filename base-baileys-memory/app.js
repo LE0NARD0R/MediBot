@@ -32,10 +32,12 @@ const flowHola = addKeyword([
     console.log(`🙉 Fin texto a voz....[PATH]:${path}`);
     await flowDynamic([{ body: "escucha", media: path }]);
   }*/
-
+// colocarle la diferenciacion para que sea de día, tarde o noche dependiendo de la hora en la que se realice la consulta.
+// colocarle nuevos triggers.
+// Colocarle diferentes interacciones, ue no sea siempre la misma.
 const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
   async (ctx, ctxFn) => {
-    await ctxFn.flowDynamic('Buenas '+ ctx.pushName + ' dame un momento para escucharte...🙉' );
+    await ctxFn.flowDynamic('Buenas '+ ctx.pushName + ' dame un momento para escucharte. Estoy chekeando tus síntomas' );
     console.log("🤖 voz a texto....");
     const text = await handlerAI(ctx);
     console.log(`🤖 Fin voz a texto....: ${text}`);
