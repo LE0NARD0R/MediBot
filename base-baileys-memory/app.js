@@ -1,4 +1,6 @@
 require("dotenv").config();
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DB_URL)
 
 const {
   createBot,
@@ -13,28 +15,34 @@ const QRPortalWeb = require("@bot-whatsapp/portal");
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
 const { handlerAI } = require("./utils");
-const { responseIA } = require("./services/completion") 
+const { responseIA } = require("./services/completion");
 const { textToVoice } = require("./services/eventlab");
 
-const flowHola = addKeyword(["hola", "ole", "buenos", "buenas", "ola"]).addAnswer(
-  ["Saludos! Estás hablando con MediBot, espero serte de ayuda"],
-  null,
-  /*async (_, { flowDynamic }) => {
+const flowHola = addKeyword([
+  "hola",
+  "ole",
+  "buenos",
+  "buenas",
+  "ola",
+]).addAnswer("Saludos! Estás hablando con MediBot, espero serte de ayuda",);
+
+/*async (_, { flowDynamic }) => {
     console.log("🙉 texto a voz....");
     const path = await textToVoice("Cómo se encuentra el día de hoy?");
     console.log(`🙉 Fin texto a voz....[PATH]:${path}`);
     await flowDynamic([{ body: "escucha", media: path }]);
   }*/
-);
 
 const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
   async (ctx, ctxFn) => {
-    await ctxFn.flowDynamic("dame un momento para escucharte...🙉");
+    await ctxFn.flowDynamic('Buenas '+ ctx.pushName + ' dame un momento para escucharte...🙉' );
     console.log("🤖 voz a texto....");
     const text = await handlerAI(ctx);
-    console.log(`🤖 Fin voz a texto....[TEXT]: ${text}`);
-    const response = await responseIA(text);
-    await ctxFn.flowDynamic(response);
+    console.log(`🤖 Fin voz a texto....: ${text}`);
+    const response = await responseIA(text, ctx);
+    const path = await textToVoice(response)
+    await ctxFn.flowDynamic([{ body: "escucha", media: path }])
+    // await ctxFn.flowDynamic(response);
   }
 );
 const main = async () => {
