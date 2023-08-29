@@ -5,6 +5,10 @@ const convSchema = new mongoose.Schema({
   number: String,
   role: [String],
   content: [String],  
+  file: {
+    data: Buffer,
+    contentType: String,
+  },
 })
 
 

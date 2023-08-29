@@ -17,6 +17,9 @@ const MockAdapter = require("@bot-whatsapp/database/mock");
 const { handlerAI } = require("./utils");
 const { responseIA } = require("./services/completion");
 const { textToVoice } = require("./services/eventlab");
+const Conv = require('./services/mongo');
+
+const interactions =  ['Quiero asegurarte que he recibido tus mensajes y estoy aquí para escuchar y comprender tus inquietudes médicas.', 'Quiero que sepas que estoy aquí para escucharte. Tu descripción y los audios que has compartido son importantes para entender mejor tu situación de salud.', 'Quiero que sepas que estoy aquí para brindarte apoyo y responder a tus preguntas de manera comprensiva.', 'Estoy trabajando en revisar los detalles para proporcionarte una evaluación precisa. Por favor, ten paciencia mientras proceso la información.', 'Estoy aquí para colaborar contigo en tu camino hacia el bienestar.']
 
 const flowHola = addKeyword([
   "hola",
@@ -24,7 +27,9 @@ const flowHola = addKeyword([
   "buenos",
   "buenas",
   "ola",
-]).addAnswer("Saludos! Estás hablando con MediBot, espero serte de ayuda",);
+  'ayuda',
+  'siento',
+]).addAnswer("Saludos! Estás hablando con MediBot. Envíame un audio con tus síntomas",);
 
 /*async (_, { flowDynamic }) => {
     console.log("🙉 texto a voz....");
@@ -32,16 +37,22 @@ const flowHola = addKeyword([
     console.log(`🙉 Fin texto a voz....[PATH]:${path}`);
     await flowDynamic([{ body: "escucha", media: path }]);
   }*/
-// colocarle la diferenciacion para que sea de día, tarde o noche dependiendo de la hora en la que se realice la consulta.
 // colocarle nuevos triggers.
-// Colocarle diferentes interacciones, ue no sea siempre la misma.
+
+
 const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
   async (ctx, ctxFn) => {
-    await ctxFn.flowDynamic('Buenas '+ ctx.pushName + ' dame un momento para escucharte. Estoy chekeando tus síntomas' );
+    const phrase = getRandomItem(interactions)
+    await ctxFn.flowDynamic('¡Hola! '+ ctx.pushName + ' gracias por contactar a MediBot. ' + phrase );
     console.log("🤖 voz a texto....");
     const text = await handlerAI(ctx);
     console.log(`🤖 Fin voz a texto....: ${text}`);
     const response = await responseIA(text, ctx);
+    const id = await Conv.findOne({name: ctx.pushName}, '_id')
+    const conv = await Conv.findById(id)
+    conv.role.push('assistant')
+    conv.content.push(response)
+    await conv.save()
     const path = await textToVoice(response)
     await ctxFn.flowDynamic([{ body: "escucha", media: path }])
     // await ctxFn.flowDynamic(response);
@@ -60,5 +71,10 @@ const main = async () => {
 
   QRPortalWeb();
 };
+function getRandomItem(arr) {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  const item = arr[randomIndex];
+  return item;
+}
 
 main();

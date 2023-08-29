@@ -5,36 +5,46 @@ const Conv = require('./mongo');
 
 
 const responseIA = async (text, ctx) => {
-
-    // if (await Conv.exist({name: ctx.pushName})){
-    //   const conv = Conv.findOne({name: ctx.pushName})
-    //   conv.role.push('user')
-    //   conv.content.push(text)
-    //   conv.save()
-    //   console.log(conv)
-    // }else {
-    //   const conv = await Conv.create({
-    //     name : ctx.pushName,
-    //     number : ctx.from,
-    //     role:['assistant', 'user'],
-    //     content: ['Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico', 'Te voy a dar unos síntomas, sin reemplazar el diagnóstico médico dame recomendaciones y qué enfermedad puedo estar presentando de manera resumida. Máximo 200 palabras. Los síntomas son los siguientes: ' + text]
-    //   })
-    //   console.log(conv)
-    // }
+  let i = 0
+  const conversation = []
+  if (await Conv.exists({name: ctx.pushName})){
+    const id = await Conv.findOne({name: ctx.pushName}, '_id')
+    const conv = await Conv.findById(id)
+    conv.role.push('user')
+    conv.content.push('Estos son mis siguientes síntomas'+ text + 'espero tus recomendaciones y tu posible diagnóstio.')
+    await conv.save()
+  } else {
+      const conv = await Conv.create({
+        name : ctx.pushName,
+        number : ctx.from,
+        role:['assistant', 'user'],
+        content: ['Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico', 'Te voy a dar unos síntomas, sin reemplazar el diagnóstico médico dame recomendaciones y qué enfermedad puedo estar presentando de manera resumida. Máximo 200 palabras. Los síntomas son los siguientes: '+ text]
+    })
+  }
     
 
-  const conversation = [
-    {
-      role: "assistant",
-      content:
-        'Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico'
-    },
-  ]
+  // const conversation = [
+  //   {
+  //     role: "assistant",
+  //     content:
+  //       'Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico'
+  //   },
+  // ]
 
-  conversation.push({
-    role: 'user',
-    content : 'Te voy a dar unos síntomas, sin reemplazar el diagnóstico médico dame recomendaciones y qué enfermedad puedo estar presentando de manera resumida. Máximo 200 palabras. Los síntomas son los siguientes: ' + text,
-  })
+  // conversation.push({
+  //   role: 'user',
+  //   content : 'Te voy a dar unos síntomas, sin reemplazar el diagnóstico médico dame recomendaciones y qué enfermedad puedo estar presentando de manera resumida. Máximo 200 palabras. Los síntomas son los siguientes: ' + text,
+  // })
+
+  const id = await Conv.findOne({name: ctx.pushName}, '_id')
+  const conv = await Conv.findById(id, 'role content')
+  for (conver in conv.role){      
+    conversation.push({
+      role: conv.role[i],
+      content: conv.content[i],
+    })
+    i += 1;
+  }
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
