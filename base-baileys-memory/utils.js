@@ -13,10 +13,17 @@ const handlerAI = async (ctx) => {
   await fs.writeFile(pathTmpOgg, buffer);
   await convertOggMp3(pathTmpOgg, pathTmpMp3);
   const text = await voiceToText(pathTmpMp3);
-  return text; //el habla1!!
+  return text;
   /**
    * OMITIR
    */
 };
 
-module.exports = { handlerAI };
+const handlerImg = async (ctx) => {
+  const buffer = await downloadMediaMessage(ctx, 'buffer')
+  const pathTmpJpeg = `${process.cwd()}/tmp/img-${Date.now()}.jpeg`
+  await fs.writeFile(pathTmpJpeg, buffer)
+  return pathTmpJpeg
+}
+
+module.exports = { handlerAI, handlerImg };

@@ -9,6 +9,10 @@ const convSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
+  uploadTime: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
 

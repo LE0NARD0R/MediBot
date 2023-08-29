@@ -2,31 +2,54 @@
   key: {
     remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3AF10F21D7EF1B14F2EF',
+    id: '3EB02E72BFDE5B612052DA',
     participant: undefined
   },
-  messageTimestamp: 1693286754,
+  messageTimestamp: 1693317377,
   pushName: 'Leonardo Rodriguez',
   broadcast: false,
   message: Message {
-    audioMessage: AudioMessage {
-      url: 'https://mmg.whatsapp.net/v/t62.7117-24/20110478_1089645645341106_2560239405369690367_n.enc?ccb=11-4&oh=01_AdRC_kEZUjJKBOMTf7-i0UhEK-OkYSYrQ4u4Z6Qfit3l5A&oe=6514FFE5&mms3=true',
-      mimetype: 'audio/ogg; codecs=opus',
+    conversation: '`${process.cwd()}/tmp/voice-note-${Date.now()}.ogg`;',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '`${process.cwd()}/tmp/voice-note-${Date.now()}.ogg`;',
+  from: '573017789134'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573017789134@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0DF20D9DEDABA988B8D',
+    participant: undefined
+  },
+  messageTimestamp: 1693317388,
+  pushName: 'Leonardo Rodriguez',
+  broadcast: false,
+  message: Message {
+    imageMessage: ImageMessage {
+      interactiveAnnotations: [],
+      scanLengths: [],
+      url: 'https://mmg.whatsapp.net/o1/v/t62.7118-24/f1/m238/up-oil-image-415ee8a3-4dc6-4b3a-be22-a0b78f3ff712?ccb=9-4&oh=01_AdRYeto2nlZNmpamI0p16YwSK2z7xcptoR0f-dTflUSMnA&oe=65157102&mms3=true',
+      mimetype: 'image/jpeg',
       fileSha256: [Uint8Array],
       fileLength: [Long],
-      seconds: 4,
+      height: 461,
+      width: 916,
       mediaKey: [Uint8Array],
       fileEncSha256: [Uint8Array],
-      directPath: '/v/t62.7117-24/20110478_1089645645341106_2560239405369690367_n.enc?ccb=11-4&oh=01_AdRC_kEZUjJKBOMTf7-i0UhEK-OkYSYrQ4u4Z6Qfit3l5A&oe=6514FFE5&_nc_hot=1693286753',
+      directPath: '/o1/v/t62.7118-24/f1/m238/up-oil-image-415ee8a3-4dc6-4b3a-be22-a0b78f3ff712?ccb=9-4&oh=01_AdRYeto2nlZNmpamI0p16YwSK2z7xcptoR0f-dTflUSMnA&oe=65157102',
       mediaKeyTimestamp: [Long],
-      streamingSidecar: [Uint8Array],
-      waveform: [Uint8Array]
+      jpegThumbnail: [Uint8Array],
+      viewOnce: false
     },
     messageContextInfo: MessageContextInfo {
       deviceListMetadata: [DeviceListMetadata],
       deviceListMetadataVersion: 2
     }
   },
-  body: '_event_voice_note__bba74822-8f86-42ab-a9f4-3fa46038a2bd',
+  body: '_event_media__b44a52f7-03ee-44ac-9e88-5930ebb61635',
   from: '573017789134'
 }

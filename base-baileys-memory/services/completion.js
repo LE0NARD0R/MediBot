@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const Conv = require('./mongo');
 
 
-
 const responseIA = async (text, ctx) => {
+
+  // create or save the new interaction of the user
   let i = 0
   const conversation = []
   if (await Conv.exists({name: ctx.pushName})){
@@ -21,21 +22,8 @@ const responseIA = async (text, ctx) => {
         content: ['Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico', 'Te voy a dar unos síntomas, sin reemplazar el diagnóstico médico dame recomendaciones y qué enfermedad puedo estar presentando de manera resumida. Máximo 200 palabras. Los síntomas son los siguientes: '+ text]
     })
   }
-    
 
-  // const conversation = [
-  //   {
-  //     role: "assistant",
-  //     content:
-  //       'Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico'
-  //   },
-  // ]
-
-  // conversation.push({
-  //   role: 'user',
-  //   content : 'Te voy a dar unos síntomas, sin reemplazar el diagnóstico médico dame recomendaciones y qué enfermedad puedo estar presentando de manera resumida. Máximo 200 palabras. Los síntomas son los siguientes: ' + text,
-  // })
-
+  // falta agregar el límite de las interacciones que quiero rescatar
   const id = await Conv.findOne({name: ctx.pushName}, '_id')
   const conv = await Conv.findById(id, 'role content')
   for (conver in conv.role){      
