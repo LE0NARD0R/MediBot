@@ -2,54 +2,71 @@
   key: {
     remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3EB02E72BFDE5B612052DA',
+    id: '3AE6A1C0669D93AA4374',
     participant: undefined
   },
-  messageTimestamp: 1693317377,
-  pushName: 'Leonardo Rodriguez',
-  broadcast: false,
-  message: Message {
-    conversation: '`${process.cwd()}/tmp/voice-note-${Date.now()}.ogg`;',
-    messageContextInfo: MessageContextInfo {
-      deviceListMetadata: [DeviceListMetadata],
-      deviceListMetadataVersion: 2
-    }
-  },
-  body: '`${process.cwd()}/tmp/voice-note-${Date.now()}.ogg`;',
-  from: '573017789134'
-}
-[handleMsg]:  {
-  key: {
-    remoteJid: '573017789134@s.whatsapp.net',
-    fromMe: false,
-    id: '3EB0DF20D9DEDABA988B8D',
-    participant: undefined
-  },
-  messageTimestamp: 1693317388,
+  messageTimestamp: 1693414296,
   pushName: 'Leonardo Rodriguez',
   broadcast: false,
   message: Message {
     imageMessage: ImageMessage {
       interactiveAnnotations: [],
-      scanLengths: [],
-      url: 'https://mmg.whatsapp.net/o1/v/t62.7118-24/f1/m238/up-oil-image-415ee8a3-4dc6-4b3a-be22-a0b78f3ff712?ccb=9-4&oh=01_AdRYeto2nlZNmpamI0p16YwSK2z7xcptoR0f-dTflUSMnA&oe=65157102&mms3=true',
+      scanLengths: [Array],
+      url: 'https://mmg.whatsapp.net/o1/v/t62.7118-24/f1/m234/up-oil-image-069aafe5-4bd9-4ccb-ad67-fc839518fb35?ccb=9-4&oh=01_AdSePaWYk7yOf0Y65rgl596HBeyRo0QpDRyfQvD-qw5oUg&oe=6516FAB4&mms3=true',
       mimetype: 'image/jpeg',
       fileSha256: [Uint8Array],
       fileLength: [Long],
-      height: 461,
-      width: 916,
+      height: 1600,
+      width: 900,
       mediaKey: [Uint8Array],
       fileEncSha256: [Uint8Array],
-      directPath: '/o1/v/t62.7118-24/f1/m238/up-oil-image-415ee8a3-4dc6-4b3a-be22-a0b78f3ff712?ccb=9-4&oh=01_AdRYeto2nlZNmpamI0p16YwSK2z7xcptoR0f-dTflUSMnA&oe=65157102',
+      directPath: '/o1/v/t62.7118-24/f1/m234/up-oil-image-069aafe5-4bd9-4ccb-ad67-fc839518fb35?ccb=9-4&oh=01_AdSePaWYk7yOf0Y65rgl596HBeyRo0QpDRyfQvD-qw5oUg&oe=6516FAB4',
       mediaKeyTimestamp: [Long],
       jpegThumbnail: [Uint8Array],
-      viewOnce: false
+      firstScanSidecar: [Uint8Array],
+      firstScanLength: 6877,
+      scansSidecar: [Uint8Array],
+      midQualityFileSha256: [Uint8Array]
     },
     messageContextInfo: MessageContextInfo {
       deviceListMetadata: [DeviceListMetadata],
       deviceListMetadataVersion: 2
     }
   },
-  body: '_event_media__b44a52f7-03ee-44ac-9e88-5930ebb61635',
+  body: '_event_media__da92b269-826c-4b75-a8a1-4383fa496655',
+  from: '573017789134'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573017789134@s.whatsapp.net',
+    fromMe: false,
+    id: '3A877E6D074DAB107767',
+    participant: undefined
+  },
+  messageTimestamp: 1693414310,
+  pushName: 'Leonardo Rodriguez',
+  broadcast: false,
+  message: Message {
+    documentMessage: DocumentMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7119-24/18971070_670555011377638_5211613700270739051_n.enc?ccb=11-4&oh=01_AdQl6GUgMaNskIXknKwcrQYRsVe8HNS0M-dmpNlZsqUFUw&oe=65170059&mms3=true',
+      mimetype: 'application/pdf',
+      title: '20230622964_1193542435',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      pageCount: 1,
+      mediaKey: [Uint8Array],
+      fileName: '20230622964_1193542435.pdf',
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7119-24/18971070_670555011377638_5211613700270739051_n.enc?ccb=11-4&oh=01_AdQl6GUgMaNskIXknKwcrQYRsVe8HNS0M-dmpNlZsqUFUw&oe=65170059&_nc_hot=1693414310',
+      mediaKeyTimestamp: [Long],
+      contactVcard: false,
+      jpegThumbnail: [Uint8Array]
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_document__dea0d6ed-9f27-4e7a-981f-d82632502f0f',
   from: '573017789134'
 }

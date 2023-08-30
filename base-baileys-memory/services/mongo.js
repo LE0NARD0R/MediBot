@@ -5,10 +5,8 @@ const convSchema = new mongoose.Schema({
   number: String,
   role: [String],
   content: [String],  
-  file: {
-    data: Buffer,
-    contentType: String,
-  },
+  image: [String],
+  docs: [String],
   uploadTime: {
     type: Date,
     default: Date.now,
