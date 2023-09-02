@@ -11,6 +11,7 @@ ffmpeg.setFfmpegPath(ffmpegPath);
 const convertOggMp3 = async (inputStream, outStream) => {
   return new Promise((resolve, reject) => {
     ffmpeg(inputStream)
+      .format('ogg')
       .audioQuality(96)
       .toFormat("mp3")
       .save(outStream)

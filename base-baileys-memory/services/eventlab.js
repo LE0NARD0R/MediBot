@@ -1,17 +1,20 @@
 const fs = require('node:fs')
 /**
  *
- * @param {*} voiceId clone voice vwfl76D5KBjKuSGfTbLB
+ * @param {*} voiceId
  * @returns
  */
-const textToVoice = async (text,voiceId = 'vwfl76D5KBjKuSGfTbLB') => {
+
+const textToVoice = async (text,voiceId = 'XB0fDUnXU5powFXDhCwa') => {
   const EVENT_TOKEN = process.env.EVENT_TOKEN ?? "";
   const URL = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
 
-  const header = new Headers();
-  header.append("accept", "audio/mpeg");
-  header.append("xi-api-key", EVENT_TOKEN);
-  header.append("Content-Type", "application/json");
+  const header = {
+    "accept": "audio/mpeg",
+    "xi-api-key": EVENT_TOKEN,
+    "Content-Type": "application/json"
+  }
+ 
 
   const raw = JSON.stringify({
     text,
@@ -24,17 +27,17 @@ const textToVoice = async (text,voiceId = 'vwfl76D5KBjKuSGfTbLB') => {
 
   const requestOptions = {
     method: "POST",
-    headers: header,
     body: raw,
+    headers: header,
     redirect: "follow",
   };
 
   const response = await fetch(URL, requestOptions);
   const buffer = await response.arrayBuffer();
-  const pathFile = `${process.cwd()}/tmp/${Date.now()}-auido.mp3`;
+  const pathFile = `${process.cwd()}/tmp/${Date.now()}-audio.mp3`;
   fs.writeFileSync(pathFile, Buffer.from(buffer));
   
-  return pathFile;
+  return buffer;
 };
 
 module.exports = { textToVoice };
