@@ -1,30 +1,129 @@
 [handleMsg]:  {
   key: {
-    remoteJid: '573017789134@s.whatsapp.net',
+    remoteJid: '573012653312@s.whatsapp.net',
     fromMe: false,
-    id: '3AE6A1C0669D93AA4374',
+    id: '3A568EAE19B108B3610B',
     participant: undefined
   },
-  messageTimestamp: 1693414296,
-  pushName: 'Leonardo Rodriguez',
+  messageTimestamp: 1693490688,
+  pushName: 'Christian Quintero',
+  broadcast: false,
+  message: Message {
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/19940256_1533558710509611_6619409163977017870_n.enc?ccb=11-4&oh=01_AdQiZsuJunyij0rOKFYX3jh93_U7Yc7sFzG00TIqaToV0A&oe=65180A52&mms3=true',
+      mimetype: 'audio/ogg; codecs=opus',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      seconds: 7,
+      ptt: true,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7117-24/19940256_1533558710509611_6619409163977017870_n.enc?ccb=11-4&oh=01_AdQiZsuJunyij0rOKFYX3jh93_U7Yc7sFzG00TIqaToV0A&oe=65180A52',
+      mediaKeyTimestamp: [Long],
+      streamingSidecar: [Uint8Array],
+      waveform: [Uint8Array]
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_voice_note__da512998-29a0-4788-9030-7006f4989631',
+  from: '573012653312'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573012653312@s.whatsapp.net',
+    fromMe: false,
+    id: '3A8334E056FD3C568D9D',
+    participant: undefined
+  },
+  messageTimestamp: 1693490704,
+  pushName: 'Christian Quintero',
+  broadcast: false,
+  message: Message {
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/30581156_1288473345368154_401254801622601564_n.enc?ccb=11-4&oh=01_AdTwYFOIxXYPIkFxwArTb3iAPFRs3uOZJ1SdjFMJu33Jdg&oe=6517F546&mms3=true',
+      mimetype: 'audio/ogg; codecs=opus',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      seconds: 1,
+      ptt: true,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7117-24/30581156_1288473345368154_401254801622601564_n.enc?ccb=11-4&oh=01_AdTwYFOIxXYPIkFxwArTb3iAPFRs3uOZJ1SdjFMJu33Jdg&oe=6517F546',
+      mediaKeyTimestamp: [Long],
+      streamingSidecar: [Uint8Array],
+      waveform: [Uint8Array]
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_voice_note__ecad4fe0-f2c0-4011-b5d1-c73faa496ccc',
+  from: '573012653312'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573012653312@s.whatsapp.net',
+    fromMe: false,
+    id: '3AF240537AD226EFA353',
+    participant: undefined
+  },
+  messageTimestamp: 1693490797,
+  pushName: 'Christian Quintero',
+  broadcast: false,
+  message: Message {
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/32324035_673139354879712_4483313351168129642_n.enc?ccb=11-4&oh=01_AdTVR2jmnT-4fYTU3mBNr4S1bMFXt3upbxWjljis5EuwOA&oe=65180929&mms3=true',
+      mimetype: 'audio/ogg; codecs=opus',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      seconds: 22,
+      ptt: true,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7117-24/32324035_673139354879712_4483313351168129642_n.enc?ccb=11-4&oh=01_AdTVR2jmnT-4fYTU3mBNr4S1bMFXt3upbxWjljis5EuwOA&oe=65180929',
+      mediaKeyTimestamp: [Long],
+      streamingSidecar: [Uint8Array],
+      waveform: [Uint8Array]
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_voice_note__36a5d50a-3cdb-4c4e-a260-7bce3eb5ea1e',
+  from: '573012653312'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573012653312@s.whatsapp.net',
+    fromMe: false,
+    id: '3AB7EB9FD0519D64CC70',
+    participant: undefined
+  },
+  messageTimestamp: 1693490882,
+  pushName: 'Christian Quintero',
   broadcast: false,
   message: Message {
     imageMessage: ImageMessage {
       interactiveAnnotations: [],
       scanLengths: [Array],
-      url: 'https://mmg.whatsapp.net/o1/v/t62.7118-24/f1/m234/up-oil-image-069aafe5-4bd9-4ccb-ad67-fc839518fb35?ccb=9-4&oh=01_AdSePaWYk7yOf0Y65rgl596HBeyRo0QpDRyfQvD-qw5oUg&oe=6516FAB4&mms3=true',
+      url: 'https://mmg.whatsapp.net/v/t62.7118-24/34674157_724963316311481_6596506118818667021_n.enc?ccb=11-4&oh=01_AdQcnoHbRAtaWdxWOL35704IIqSNbus0eCIHeG_c6HLcDw&oe=65181561&mms3=true',
       mimetype: 'image/jpeg',
       fileSha256: [Uint8Array],
       fileLength: [Long],
       height: 1600,
-      width: 900,
+      width: 901,
       mediaKey: [Uint8Array],
       fileEncSha256: [Uint8Array],
-      directPath: '/o1/v/t62.7118-24/f1/m234/up-oil-image-069aafe5-4bd9-4ccb-ad67-fc839518fb35?ccb=9-4&oh=01_AdSePaWYk7yOf0Y65rgl596HBeyRo0QpDRyfQvD-qw5oUg&oe=6516FAB4',
+      directPath: '/v/t62.7118-24/34674157_724963316311481_6596506118818667021_n.enc?ccb=11-4&oh=01_AdQcnoHbRAtaWdxWOL35704IIqSNbus0eCIHeG_c6HLcDw&oe=65181561',
       mediaKeyTimestamp: [Long],
       jpegThumbnail: [Uint8Array],
       firstScanSidecar: [Uint8Array],
-      firstScanLength: 6877,
+      firstScanLength: 11599,
       scansSidecar: [Uint8Array],
       midQualityFileSha256: [Uint8Array]
     },
@@ -33,40 +132,173 @@
       deviceListMetadataVersion: 2
     }
   },
-  body: '_event_media__da92b269-826c-4b75-a8a1-4383fa496655',
-  from: '573017789134'
+  body: '_event_media__2776063f-414a-438b-b1d9-a7a28cdd39d4',
+  from: '573012653312'
 }
 [handleMsg]:  {
   key: {
-    remoteJid: '573017789134@s.whatsapp.net',
+    remoteJid: '573012653312@s.whatsapp.net',
     fromMe: false,
-    id: '3A877E6D074DAB107767',
+    id: '3A12D9D3FAEC215FB452',
     participant: undefined
   },
-  messageTimestamp: 1693414310,
-  pushName: 'Leonardo Rodriguez',
+  messageTimestamp: 1693490906,
+  pushName: 'Christian Quintero',
   broadcast: false,
   message: Message {
-    documentMessage: DocumentMessage {
-      url: 'https://mmg.whatsapp.net/v/t62.7119-24/18971070_670555011377638_5211613700270739051_n.enc?ccb=11-4&oh=01_AdQl6GUgMaNskIXknKwcrQYRsVe8HNS0M-dmpNlZsqUFUw&oe=65170059&mms3=true',
-      mimetype: 'application/pdf',
-      title: '20230622964_1193542435',
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/35491513_315923064255125_2062208554296874847_n.enc?ccb=11-4&oh=01_AdRZlGCGeVXSinupNLJqlRpgSkVsPjkPvLclqIbLEiJVNQ&oe=65180163&mms3=true',
+      mimetype: 'audio/ogg; codecs=opus',
       fileSha256: [Uint8Array],
       fileLength: [Long],
-      pageCount: 1,
+      seconds: 14,
+      ptt: true,
       mediaKey: [Uint8Array],
-      fileName: '20230622964_1193542435.pdf',
       fileEncSha256: [Uint8Array],
-      directPath: '/v/t62.7119-24/18971070_670555011377638_5211613700270739051_n.enc?ccb=11-4&oh=01_AdQl6GUgMaNskIXknKwcrQYRsVe8HNS0M-dmpNlZsqUFUw&oe=65170059&_nc_hot=1693414310',
+      directPath: '/v/t62.7117-24/35491513_315923064255125_2062208554296874847_n.enc?ccb=11-4&oh=01_AdRZlGCGeVXSinupNLJqlRpgSkVsPjkPvLclqIbLEiJVNQ&oe=65180163',
       mediaKeyTimestamp: [Long],
-      contactVcard: false,
-      jpegThumbnail: [Uint8Array]
+      streamingSidecar: [Uint8Array],
+      waveform: [Uint8Array]
     },
     messageContextInfo: MessageContextInfo {
       deviceListMetadata: [DeviceListMetadata],
       deviceListMetadataVersion: 2
     }
   },
-  body: '_event_document__dea0d6ed-9f27-4e7a-981f-d82632502f0f',
-  from: '573017789134'
+  body: '_event_voice_note__5bd214a9-5dbc-4b2e-b75b-26b707d816ed',
+  from: '573012653312'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573012653312@s.whatsapp.net',
+    fromMe: false,
+    id: '5E787212D2EADFC38805',
+    participant: undefined
+  },
+  messageTimestamp: 1693491133,
+  pushName: 'Christian Quintero',
+  broadcast: false,
+  message: Message {
+    documentMessage: DocumentMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7119-24/11281134_685224133470622_3688126792668480206_n.enc?ccb=11-4&oh=01_AdRYv0uzqo5wtMcEzd8Ygotfez-wrkiLCF3E9qOgz7ZzYQ&oe=651801E7&mms3=true',
+      mimetype: 'application/pdf',
+      title: 'Resultado_13541106_CHRISTIAN QUINTERO MONROY_07273033_0_0705111126387trC8FI',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      pageCount: 1,
+      mediaKey: [Uint8Array],
+      fileName: 'Resultado_13541106_CHRISTIAN QUINTERO MONROY_07273033_0_0705111126387trC8FI.pdf',
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7119-24/11281134_685224133470622_3688126792668480206_n.enc?ccb=11-4&oh=01_AdRYv0uzqo5wtMcEzd8Ygotfez-wrkiLCF3E9qOgz7ZzYQ&oe=651801E7',
+      mediaKeyTimestamp: [Long],
+      contactVcard: false,
+      jpegThumbnail: [Uint8Array],
+      caption: ''
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_document__944c13e3-c1b5-4206-b9d3-bcf23b5a6f49',
+  from: '573012653312'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573012653312@s.whatsapp.net',
+    fromMe: false,
+    id: '3AA6E43B28A5F9C2EE51',
+    participant: undefined
+  },
+  messageTimestamp: 1693491155,
+  pushName: 'Christian Quintero',
+  broadcast: false,
+  message: Message {
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/29896013_659549379455941_304447691836994924_n.enc?ccb=11-4&oh=01_AdSaSq8Kyw5NfFdCTR1D_jxfZxAxEbmdKpLEDh3RpCyA8w&oe=6517F612&mms3=true',
+      mimetype: 'audio/ogg; codecs=opus',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      seconds: 12,
+      ptt: true,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7117-24/29896013_659549379455941_304447691836994924_n.enc?ccb=11-4&oh=01_AdSaSq8Kyw5NfFdCTR1D_jxfZxAxEbmdKpLEDh3RpCyA8w&oe=6517F612',
+      mediaKeyTimestamp: [Long],
+      streamingSidecar: [Uint8Array],
+      waveform: [Uint8Array]
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_voice_note__15f6fe19-c65b-488b-99db-6ef8435a1db2',
+  from: '573012653312'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573012653312@s.whatsapp.net',
+    fromMe: false,
+    id: '3AF0EF481A17311F860E',
+    participant: undefined
+  },
+  messageTimestamp: 1693491237,
+  pushName: 'Christian Quintero',
+  broadcast: false,
+  message: Message {
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/11734581_166595306464150_927467454385445221_n.enc?ccb=11-4&oh=01_AdS2Ybei1XY6N4iL_ehz_iPqjAL3zaHuKvbyEFCUOXPn4A&oe=65181742&mms3=true',
+      mimetype: 'audio/ogg; codecs=opus',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      seconds: 6,
+      ptt: true,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7117-24/11734581_166595306464150_927467454385445221_n.enc?ccb=11-4&oh=01_AdS2Ybei1XY6N4iL_ehz_iPqjAL3zaHuKvbyEFCUOXPn4A&oe=65181742',
+      mediaKeyTimestamp: [Long],
+      streamingSidecar: [Uint8Array],
+      waveform: [Uint8Array]
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_voice_note__20e16eec-2675-4d2d-a4e2-39365d276046',
+  from: '573012653312'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573012653312@s.whatsapp.net',
+    fromMe: false,
+    id: '3A178CB57F82038E7F9D',
+    participant: undefined
+  },
+  messageTimestamp: 1693491333,
+  pushName: 'Christian Quintero',
+  broadcast: false,
+  message: Message {
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/31274385_810548790719132_5114433762494225803_n.enc?ccb=11-4&oh=01_AdSq1D7ubPLydVjq9mbYz1DD4wP75h6R8vh7RvVs39fDiw&oe=651801F7&mms3=true',
+      mimetype: 'audio/ogg; codecs=opus',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      seconds: 4,
+      ptt: true,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7117-24/31274385_810548790719132_5114433762494225803_n.enc?ccb=11-4&oh=01_AdSq1D7ubPLydVjq9mbYz1DD4wP75h6R8vh7RvVs39fDiw&oe=651801F7',
+      mediaKeyTimestamp: [Long],
+      streamingSidecar: [Uint8Array],
+      waveform: [Uint8Array]
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_voice_note__ebe5daf0-078f-4cef-a0c9-d4a4ae549bef',
+  from: '573012653312'
 }
