@@ -13,6 +13,6 @@ const convSchema = new mongoose.Schema({
   },
 })
 
-
+// agregar médico tratante, así como su área
 
 module.exports = mongoose.model('conv', convSchema);

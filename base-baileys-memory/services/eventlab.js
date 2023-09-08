@@ -10,9 +10,8 @@ const textToVoice = async (text,voiceId = 'XB0fDUnXU5powFXDhCwa') => {
   const URL = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
 
   const header = {
-    "accept": "audio/mpeg",
+    "accept": "application/json",
     "xi-api-key": EVENT_TOKEN,
-    "Content-Type": "application/json"
   }
  
 
@@ -37,7 +36,7 @@ const textToVoice = async (text,voiceId = 'XB0fDUnXU5powFXDhCwa') => {
   const pathFile = `${process.cwd()}/tmp/${Date.now()}-audio.mp3`;
   fs.writeFileSync(pathFile, Buffer.from(buffer));
   
-  return buffer;
+  return pathFile;
 };
 
 module.exports = { textToVoice };

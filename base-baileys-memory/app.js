@@ -38,11 +38,15 @@ const flowHola = addKeyword([
 );
 // colocarle nuevos triggers.
 
-
 const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
   async (ctx, ctxFn) => {
-    const phrase = getRandomItem(interactions)
-    await ctxFn.flowDynamic('¡Hola! '+ ctx.pushName + ' gracias por contactar a MediBot. ' + phrase );
+    if(await Conv.exists({name: ctx.pushName})){
+      await ctxFn.flowDynamic('Por favor espera un momento mientras te escucho')
+      console.log('existe')
+    }else{
+      const phrase = getRandomItem(interactions)
+      await ctxFn.flowDynamic('¡Hola! '+ ctx.pushName + ' gracias por contactar a MediBot. ' + phrase );
+    }    
     console.log("🤖 voz a texto....");
     const text = await handlerAI(ctx);
     console.log(`🤖 Fin voz a texto....: ${text}`);
@@ -54,13 +58,14 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
     await conv.save()
     await ctxFn.flowDynamic(response);
     // const voiceId = getRandomItem(voiceid);
-    // const path = await textToVoice(response)
-    // console.log('el path es: ' +path)
+    const path = await textToVoice(response)
+    console.log('el path es: ' + path)
     // await ctxFn.flowDynamic([{ body: "escucha", media: path }])
     
   }
 );
 
+// Agregar guardar imágenes a la respuesta de la inteligencia artificial
 const flowImage = addKeyword(EVENTS.MEDIA).addAction(
   async(ctx, ctxFn) => {
     console.log('Imagen')
