@@ -42,14 +42,14 @@ const createMongo = async (ctx) => {
   }
 
 const createDate = (completeDate) => {
-  const year = completeDate.getFullYear()
-  const month = completeDate.getMonth()
-  const day = completeDate.getDate()
-  const hour = completeDate.getHours()
-  const minute = completeDate.getMinutes()
-  const date = 'Hora de la consulta: ' + year + '/' + month + '/' + day + ' - ' + hour + ':' + minute
-  return date
+  const year = completeDate.getFullYear();
+  const month = String(completeDate.getMonth() + 1).padStart(2, '0');
+  const day = String(completeDate.getDate()).padStart(2, '0');
+  const hour = String(completeDate.getHours()).padStart(2, '0');
+  const minute = String(completeDate.getMinutes()).padStart(2, '0');
+
+  const date = `Hora de la consulta: ${year}/${month}/${day} - ${hour}:${minute}`;
+  return date;
 }
   
-
 module.exports = { handlerAI, dataToBase, createMongo, createDate };

@@ -8,7 +8,9 @@ const convSchema = new mongoose.Schema({
   role: [String],
   content: [String],  
   image: [String],
+  uploadImage: [String],
   docs: [String],
+  uploadDocs: [String],
   uploadTime: {
     type: Date,
     default: Date.now,
