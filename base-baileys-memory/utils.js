@@ -35,11 +35,21 @@ const createMongo = async (ctx) => {
       name : ctx.pushName,
       number : ctx.from,
       role:['assistant'],
-      content: ['Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico de manera resumida'],
+      content: ['Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico en máximo 100 palabras. Sólo debes responder preguntas asociadas con el ámbito médico, si alguien pregunta algo fuera del ámbito médico debes decir que no puedes responder su pregunta. Además, puedes recibir imágenes, exámenes y pdf, no los analizas, pero si los guardas.'],
     })
     return ('se creó')
   }
   }
+
+const createDate = (completeDate) => {
+  const year = completeDate.getFullYear()
+  const month = completeDate.getMonth()
+  const day = completeDate.getDate()
+  const hour = completeDate.getHours()
+  const minute = completeDate.getMinutes()
+  const date = 'Hora de la consulta: ' + year + '/' + month + '/' + day + ' - ' + hour + ':' + minute
+  return date
+}
   
 
-module.exports = { handlerAI, dataToBase, createMongo };
+module.exports = { handlerAI, dataToBase, createMongo, createDate };

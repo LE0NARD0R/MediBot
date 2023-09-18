@@ -19,7 +19,7 @@ const {
 const QRPortalWeb = require("@bot-whatsapp/portal");
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
-const { handlerAI, dataToBase, createMongo } = require("./utils");
+const { handlerAI, dataToBase, createMongo, createDate } = require("./utils");
 const { responseIA } = require("./services/completion");
 // const { textToVoice } = require("./services/eventlab");
 const { textToSpeech } = require('./services/polly')
@@ -56,20 +56,26 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
       await ctxFn.flowDynamic('*MediBot:* ¡Hola! '+ ctx.pushName + ' gracias por contactar a MediBot. ' + phrase );
     }    
     console.log("🤖 voz a texto....");
+    const completeDate = new Date()
+    const date = createDate( completeDate )
+    console.log('Hora de la consulta: ' + date)
     
-    const text = await handlerAI(ctx);
-    await ctxFn.flowDynamic('*'+ ctx.pushName + ':* ' + text);
-    console.log(`🤖 Fin voz a texto....: ${text}`);
-    const response = await responseIA(text, ctx);
+    // const text = await handlerAI(ctx);
+    // await ctxFn.flowDynamic('*'+ ctx.pushName + ':* ' + text);
+    // console.log(`🤖 Fin voz a texto....: ${text}`);
+    // const response = await responseIA(text, ctx, date);
+
     // const response = 'si funciona, ganamos';
     // const voiceId = getRandomItem(voiceid)
     // const path = await textToSpeech(voiceId, response)
-    const id = await Conv.findOne({name: ctx.pushName}, 'id')
-    const conv = await Conv.findById(id)
-    conv.role.push('assistant')
-    conv.content.push(response)
-    await conv.save()
-    await ctxFn.flowDynamic('*MediBot:* ' + response );
+
+    // const id = await Conv.findOne({name: ctx.pushName}, 'id')
+    // const conv = await Conv.findById(id)
+    // conv.role.push('assistant')
+    // conv.content.push(response)
+    // await conv.save()
+    // await ctxFn.flowDynamic('*MediBot:* ' + response );
+
     // console.log('path:' + path)
     // let time = 0;
     // for (let i = 0; i < 1000000000000000; i++) {

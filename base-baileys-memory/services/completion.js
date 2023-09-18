@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Conv = require('./mongo');
 
 
-const responseIA = async (text, ctx) => {
+const responseIA = async (text, ctx, date) => {
 
   // create or save the new interaction of the user
   let i = 0
@@ -12,7 +12,7 @@ const responseIA = async (text, ctx) => {
     const id = await Conv.findOne({name: ctx.pushName}, '_id')
     const conv = await Conv.findById(id)
     conv.role.push('user')
-    conv.content.push('Estos son mis siguientes síntomas'+ text + 'espero tus recomendaciones y tu posible diagnóstio en máximo 100 palabras.')    
+    conv.content.push('Estos son mis siguientes síntomas'+ text + 'espero tus recomendaciones y tu posible diagnóstio en máximo 100 palabras. ( ' + date + ' )')    
     await conv.save()
   } else {
       const conv = await Conv.create({
