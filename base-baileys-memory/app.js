@@ -1,6 +1,11 @@
 require("dotenv").config();
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DB_URL)
+const AWS = require('aws-sdk')
+AWS.config.loadFromPath('./config.json')
+const fs = require('fs');
+
+
 
 const {
   createBot,
@@ -16,11 +21,14 @@ const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
 const { handlerAI, dataToBase, createMongo } = require("./utils");
 const { responseIA } = require("./services/completion");
-const { textToVoice } = require("./services/eventlab");
+// const { textToVoice } = require("./services/eventlab");
+const { textToSpeech } = require('./services/polly')
 const Conv = require('./services/mongo');
 
 const interactions =  ['Quiero asegurarte que he recibido tus mensajes y estoy aquí para escuchar y comprender tus inquietudes médicas.', 'Quiero que sepas que estoy aquí para escucharte. Tu descripción y los audios que has compartido son importantes para entender mejor tu situación de salud.', 'Quiero que sepas que estoy aquí para brindarte apoyo y responder a tus preguntas de manera comprensiva.', 'Estoy trabajando en revisar los detalles para proporcionarte una evaluación precisa. Por favor, ten paciencia mientras proceso la información.', 'Estoy aquí para colaborar contigo en tu camino hacia el bienestar.']
-voiceid =['21m00Tcm4TlvDq8ikWAM', 'XB0fDUnXU5powFXDhCwa', '2EiwWnXFnvU5JabPnv8n', 'AZnzlk1XvdvUeBnXmlld', 'CYw3kZ02Hs0563khs1Fj', 'D38z5RcWu1voky8WS1ja']
+voiceid =['Lupe', 'Penelope', 'Miguel']
+
+
 
 const flowHola = addKeyword([
   "hola",
@@ -41,29 +49,58 @@ const flowHola = addKeyword([
 const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
   async (ctx, ctxFn) => {
     if(await Conv.exists({name: ctx.pushName})){
-      await ctxFn.flowDynamic('Por favor espera un momento mientras te escucho')
+      await ctxFn.flowDynamic('*MediBot:* Por favor espera un momento mientras te escucho')
       console.log('existe')
     }else{
       const phrase = getRandomItem(interactions)
-      await ctxFn.flowDynamic('¡Hola! '+ ctx.pushName + ' gracias por contactar a MediBot. ' + phrase );
+      await ctxFn.flowDynamic('*MediBot:* ¡Hola! '+ ctx.pushName + ' gracias por contactar a MediBot. ' + phrase );
     }    
     console.log("🤖 voz a texto....");
+    
     const text = await handlerAI(ctx);
+    await ctxFn.flowDynamic('*'+ ctx.pushName + ':* ' + text);
     console.log(`🤖 Fin voz a texto....: ${text}`);
     const response = await responseIA(text, ctx);
+    // const response = 'si funciona, ganamos';
+    // const voiceId = getRandomItem(voiceid)
+    // const path = await textToSpeech(voiceId, response)
     const id = await Conv.findOne({name: ctx.pushName}, 'id')
     const conv = await Conv.findById(id)
     conv.role.push('assistant')
     conv.content.push(response)
     await conv.save()
-    await ctxFn.flowDynamic(response);
-    // const voiceId = getRandomItem(voiceid);
-    const path = await textToVoice(response)
-    console.log('el path es: ' + path)
-    // await ctxFn.flowDynamic([{ body: "escucha", media: path }])
+    await ctxFn.flowDynamic('*MediBot:* ' + response );
+    // console.log('path:' + path)
+    // let time = 0;
+    // for (let i = 0; i < 1000000000000000; i++) {
+    //   if (i === 90000000){
+    //     setTimeout(() => {
+    //       time = 1
+    //     }, 1000)
+    //   }
+    // }
+    
+    // console.log(time)
+
+    // if (path){
+    //   try{
+    //     ctxFn.flowDynamic([{ body: "escucha", media: path }])
+    //   }catch(e){
+    //     console.log(e)
+    //   }
+    // }
+    // ctxFn.flowDynamic([{ body: "escucha", media: path }])
+    
+    
     
   }
 );
+
+// guardarle la hora a las imagénes y documetos guardados.
+// agregarle un código al médico para tener los síntomas de los pacientes.
+// recuperar las fotos
+// agregarle un flow que sea el flow del médico para conexión por parte del médico
+// vamos a almacear las fechas de interacción
 
 // Agregar guardar imágenes a la respuesta de la inteligencia artificial
 const flowImage = addKeyword(EVENTS.MEDIA).addAction(
@@ -95,6 +132,8 @@ const flowDoc = addKeyword(EVENTS.DOCUMENT).addAction(
     await ctxFn.flowDynamic('Hemos guardado tu documento')
   }
 )
+
+// const flowAdd = 
 
 const main = async () => {
   const adapterDB = new MockAdapter();

@@ -36,8 +36,6 @@ const createMongo = async (ctx) => {
       number : ctx.from,
       role:['assistant'],
       content: ['Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico de manera resumida'],
-      image: ['image1'],
-      docs: ['doc0'],
     })
     return ('se creó')
   }
