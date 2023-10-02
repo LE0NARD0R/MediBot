@@ -27,6 +27,11 @@ const dataToBase = async (ctx) => {
   return response
 }
 
+const baseToImg = async (data) => {
+  const pathFile = `${process.cwd()}/tmp/${Date.now()}-image.jpeg`
+  // continuar función de transformación de base 64 a imagen
+}
+
 const createMongo = async (ctx) => {
   if (await Conv.exists({name: ctx.pushName})){
     return ('Ya se había creado')

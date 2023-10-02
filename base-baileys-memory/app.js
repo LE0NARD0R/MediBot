@@ -78,7 +78,7 @@ const keywords = [
 
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
-const { handlerAI, dataToBase, createMongo, createDate } = require("./utils");
+const { handlerAI, dataToBase, createMongo, createDate, baseToImg } = require("./utils");
 const { responseIA } = require("./services/completion");
 const { textToSpeech } = require("./services/polly");
 const Conv = require("./services/mongo");
@@ -92,9 +92,16 @@ const interactions = [
 ];
 voiceid = ["Lupe", "Penelope", "Miguel"];
 
-// const flowHola = addKeyword(keywords).addAnswer('prueba');
+const flowHola = addKeyword('resumen').addAction(async (ctx, ctxFN) => {
+  try {
+    const imgBuffer = []
+    const id = await Conv.findOne({ name: ctx.pushName }, "id");
+    const conv = await Conv.findById(id, 'image');
 
-// Función para guardar el nombre del médico necesaria, muy necesaria
+  }catch (error) {
+    console.error("Error en el flujo de recuperación:", error);
+  }
+});
 
 const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
   async (ctx, ctxFn) => {
@@ -112,7 +119,7 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
         const welcomeMessage = `*MediBot:* ¡Hola! ${ctx.pushName} gracias por contactar a MediBot. ${phrase}`;
         await ctxFn.flowDynamic(welcomeMessage);
       }
-
+      /*
       const completeDate = new Date();
       const date = createDate(completeDate);
 
@@ -134,6 +141,8 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
 
       await ctxFn.flowDynamic("*MediBot:* " + response);
       ctxFn.flowDynamic([{ body: "escucha", media: path }]);
+      */
+
     } catch (error) {
       console.error("Error en el flujo de voz:", error);
     }
@@ -190,7 +199,7 @@ const flowDoc = addKeyword(EVENTS.DOCUMENT).addAction(async (ctx, ctxFn) => {
 
 const main = async () => {
   const adapterDB = new MockAdapter();
-  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc]);
+  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc, flowHola]);
   const adapterProvider = createProvider(BaileysProvider);
 
   createBot({
