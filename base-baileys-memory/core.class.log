@@ -2,24 +2,25 @@
   key: {
     remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3EB05329755D23D59D46D3',
+    id: '3AFF927C4807C34E4C72',
     participant: undefined
   },
-  messageTimestamp: 1695048647,
+  messageTimestamp: 1695909367,
   pushName: 'Leonardo Rodriguez',
   broadcast: false,
   message: Message {
     audioMessage: AudioMessage {
-      url: 'https://mmg.whatsapp.net/v/t62.7117-24/29787212_1080228076280574_8575073912390639732_n.enc?ccb=11-4&oh=01_AdS6e1kdMXqtPWRG9-yxmrMBtiY0CtK4nAjg5xoba0OcwA&oe=652FD95C&_nc_sid=000000&mms3=true',
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/31091441_258128263876168_5851963351020568370_n.enc?ccb=11-4&oh=01_AdQS-YP4h0ckP-0D7ESjUrwQBoCA8_uK9cjNf1lucKKFpQ&oe=653D0C9F&_nc_sid=000000&mms3=true',
       mimetype: 'audio/ogg; codecs=opus',
       fileSha256: [Uint8Array],
       fileLength: [Long],
-      seconds: 7,
-      ptt: false,
+      seconds: 9,
+      ptt: true,
       mediaKey: [Uint8Array],
       fileEncSha256: [Uint8Array],
-      directPath: '/v/t62.7117-24/29787212_1080228076280574_8575073912390639732_n.enc?ccb=11-4&oh=01_AdS6e1kdMXqtPWRG9-yxmrMBtiY0CtK4nAjg5xoba0OcwA&oe=652FD95C&_nc_sid=000000',
+      directPath: '/v/t62.7117-24/31091441_258128263876168_5851963351020568370_n.enc?ccb=11-4&oh=01_AdQS-YP4h0ckP-0D7ESjUrwQBoCA8_uK9cjNf1lucKKFpQ&oe=653D0C9F&_nc_sid=000000',
       mediaKeyTimestamp: [Long],
+      streamingSidecar: [Uint8Array],
       waveform: [Uint8Array]
     },
     messageContextInfo: MessageContextInfo {
@@ -27,6 +28,6 @@
       deviceListMetadataVersion: 2
     }
   },
-  body: '_event_voice_note__d6ca256c-91a2-4e5a-b230-dff836f5fcee',
+  body: '_event_voice_note__f982f9f5-e979-4065-95e8-c1129af49ccd',
   from: '573017789134'
 }
