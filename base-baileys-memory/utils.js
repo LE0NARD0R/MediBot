@@ -27,9 +27,14 @@ const dataToBase = async (ctx) => {
   return response
 }
 
-const baseToImg = async (data) => {
-  const pathFile = `${process.cwd()}/tmp/${Date.now()}-image.jpeg`
-  // continuar función de transformación de base 64 a imagen
+async function baseToImg(data) {
+    return new Promise( (resolve) => {
+      const pathFile = `${process.cwd()}/tmp/${Date.now()}-image.jpeg`
+      const binaryData = Buffer.from(data, 'base64')
+      fs.writeFile(pathFile, binaryData)
+      console.log('image saves successfully')
+      resolve(pathFile)
+    })
 }
 
 const createMongo = async (ctx) => {
@@ -57,4 +62,4 @@ const createDate = (completeDate) => {
   return date;
 }
   
-module.exports = { handlerAI, dataToBase, createMongo, createDate };
+module.exports = { handlerAI, dataToBase, createMongo, createDate, baseToImg };

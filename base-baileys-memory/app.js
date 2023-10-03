@@ -92,14 +92,22 @@ const interactions = [
 ];
 voiceid = ["Lupe", "Penelope", "Miguel"];
 
-const flowHola = addKeyword('resumen').addAction(async (ctx, ctxFN) => {
+const flowHola = addKeyword('resumen').addAction(async (ctx, ctxFn) => {
   try {
-    const imgBuffer = []
+    let i = 0
+
     const id = await Conv.findOne({ name: ctx.pushName }, "id");
     const conv = await Conv.findById(id, 'image');
 
+    for (img in conv.image){
+      const path = await baseToImg(conv.image[i])
+      console.log(`El path es: ${path}`)
+      i+=1
+      ctxFn.flowDynamic([{ body: `Esta es la imagen ${i}`, media: path }])
+    }
+    
   }catch (error) {
-    console.error("Error en el flujo de recuperación:", error);
+    console.error("Error al recuperar las imágenes:", error);
   }
 });
 
@@ -119,7 +127,7 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
         const welcomeMessage = `*MediBot:* ¡Hola! ${ctx.pushName} gracias por contactar a MediBot. ${phrase}`;
         await ctxFn.flowDynamic(welcomeMessage);
       }
-      /*
+      
       const completeDate = new Date();
       const date = createDate(completeDate);
 
@@ -141,7 +149,7 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
 
       await ctxFn.flowDynamic("*MediBot:* " + response);
       ctxFn.flowDynamic([{ body: "escucha", media: path }]);
-      */
+      
 
     } catch (error) {
       console.error("Error en el flujo de voz:", error);
@@ -151,7 +159,7 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
 
 // modificar el prompt para que deje de ser tan jodon con la insistencia.
 // agregarle un código al médico para tener los síntomas de los pacientes.
-// recuperar las fotos
+// recuperar los documentos
 // agregarle un flow que sea el flow del médico para conexión por parte del médico
 
 // Agregar guardar imágenes a la respuesta de la inteligencia artificial

@@ -2,54 +2,19 @@
   key: {
     remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3EB0661C5F22D28F9A198B',
+    id: '3EB01DDB0E8079D13FCAB1',
     participant: undefined
   },
-  messageTimestamp: 1696271965,
+  messageTimestamp: 1696350004,
   pushName: 'Leonardo Rodriguez',
   broadcast: false,
   message: Message {
-    conversation: 'RESUMEN',
+    conversation: 'resumen',
     messageContextInfo: MessageContextInfo {
       deviceListMetadata: [DeviceListMetadata],
       deviceListMetadataVersion: 2
     }
   },
-  body: 'RESUMEN',
-  from: '573017789134'
-}
-[handleMsg]:  {
-  key: {
-    remoteJid: '573017789134@s.whatsapp.net',
-    fromMe: false,
-    id: '3EB05FBC7301F4F33A072D',
-    participant: undefined
-  },
-  messageTimestamp: 1696273325,
-  pushName: 'Leonardo Rodriguez',
-  broadcast: false,
-  message: Message {
-    imageMessage: ImageMessage {
-      interactiveAnnotations: [],
-      scanLengths: [],
-      url: 'https://mmg.whatsapp.net/o1/v/t62.7118-24/f1/m234/up-oil-image-ec495611-c831-46b3-9961-54c68bc877fc?ccb=9-4&oh=01_AdQmcY60iCrnp0DyXKe_jAAVOJbOpbBpaXUjY68oopNzrw&oe=6542914A&_nc_sid=000000&mms3=true',
-      mimetype: 'image/jpeg',
-      fileSha256: [Uint8Array],
-      fileLength: [Long],
-      height: 416,
-      width: 785,
-      mediaKey: [Uint8Array],
-      fileEncSha256: [Uint8Array],
-      directPath: '/o1/v/t62.7118-24/f1/m234/up-oil-image-ec495611-c831-46b3-9961-54c68bc877fc?ccb=9-4&oh=01_AdQmcY60iCrnp0DyXKe_jAAVOJbOpbBpaXUjY68oopNzrw&oe=6542914A&_nc_sid=000000',
-      mediaKeyTimestamp: [Long],
-      jpegThumbnail: [Uint8Array],
-      viewOnce: false
-    },
-    messageContextInfo: MessageContextInfo {
-      deviceListMetadata: [DeviceListMetadata],
-      deviceListMetadataVersion: 2
-    }
-  },
-  body: '_event_media__30204fcf-4582-4094-902d-dec302a83f05',
+  body: 'resumen',
   from: '573017789134'
 }
