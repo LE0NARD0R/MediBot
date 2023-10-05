@@ -2,10 +2,10 @@
   key: {
     remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3EB01DDB0E8079D13FCAB1',
+    id: '3EB0EAD23EA4D31AEFD0FF',
     participant: undefined
   },
-  messageTimestamp: 1696350004,
+  messageTimestamp: 1696470186,
   pushName: 'Leonardo Rodriguez',
   broadcast: false,
   message: Message {

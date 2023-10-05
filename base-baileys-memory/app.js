@@ -78,8 +78,8 @@ const keywords = [
 
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
-const { handlerAI, dataToBase, createMongo, createDate, baseToImg } = require("./utils");
-const { responseIA } = require("./services/completion");
+const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc } = require("./utils");
+const { responseIA, resumeIA } = require("./services/completion");
 const { textToSpeech } = require("./services/polly");
 const Conv = require("./services/mongo");
 
@@ -95,17 +95,28 @@ voiceid = ["Lupe", "Penelope", "Miguel"];
 const flowHola = addKeyword('resumen').addAction(async (ctx, ctxFn) => {
   try {
     let i = 0
+    let d = 0
 
     const id = await Conv.findOne({ name: ctx.pushName }, "id");
-    const conv = await Conv.findById(id, 'image');
+    const conv = await Conv.findById(id, 'image uploadImage docs uploadDocs');
 
+    //Get back the images
     for (img in conv.image){
       const path = await baseToImg(conv.image[i])
-      console.log(`El path es: ${path}`)
+      ctxFn.flowDynamic([{ body: `${conv.uploadImage[i]}`, media: path }])
       i+=1
-      ctxFn.flowDynamic([{ body: `Esta es la imagen ${i}`, media: path }])
     }
-    
+
+    //Get back the docs
+    for (doc in conv.docs){
+      const path = await baseToDoc(conv.docs[d])
+      ctxFn.flowDynamic([{ body: `${conv.uploadDocs[d]}`, media: path }])
+      d += 1
+    }
+
+    //Response with the resume
+    const response = await resumeIA(ctx);
+    await ctxFn.flowDynamic("*MediBot:* " + response);
   }catch (error) {
     console.error("Error al recuperar las imágenes:", error);
   }
@@ -143,9 +154,6 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
 
       const id = await Conv.findOne({ name: ctx.pushName }, "id");
       const conv = await Conv.findById(id);
-      conv.role.push("assistant");
-      conv.content.push(response);
-      await conv.save();
 
       await ctxFn.flowDynamic("*MediBot:* " + response);
       ctxFn.flowDynamic([{ body: "escucha", media: path }]);
@@ -165,6 +173,7 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
 // Agregar guardar imágenes a la respuesta de la inteligencia artificial
 const flowImage = addKeyword(EVENTS.MEDIA).addAction(async (ctx, ctxFn) => {
   console.log("Imagen");
+  const imgConsult = 'Imagen guardada el: '
   await ctxFn.flowDynamic(
     "¡Hola! " +
       ctx.pushName +
@@ -176,7 +185,7 @@ const flowImage = addKeyword(EVENTS.MEDIA).addAction(async (ctx, ctxFn) => {
   const id = await Conv.findOne({ name: ctx.pushName }, "id");
   const conv = await Conv.findById(id);
   const completeDate = new Date();
-  const date = createDate(completeDate);
+  const date = createDate(completeDate, imgConsult);
   conv.image.push(img);
   conv.uploadImage.push(date);
   conv.save();
@@ -185,6 +194,7 @@ const flowImage = addKeyword(EVENTS.MEDIA).addAction(async (ctx, ctxFn) => {
 
 const flowDoc = addKeyword(EVENTS.DOCUMENT).addAction(async (ctx, ctxFn) => {
   console.log("Documentos");
+  const docConsult = 'Documento guardado el: '
   await ctxFn.flowDynamic(
     "¡Hola! " +
       ctx.pushName +
@@ -196,7 +206,7 @@ const flowDoc = addKeyword(EVENTS.DOCUMENT).addAction(async (ctx, ctxFn) => {
   const id = await Conv.findOne({ name: ctx.pushName }, "id");
   const conv = await Conv.findById(id);
   const completeDate = new Date();
-  const date = createDate(completeDate);
+  const date = createDate(completeDate, docConsult);
   conv.docs.push(doc);
   conv.uploadDocs.push(date);
   conv.save();

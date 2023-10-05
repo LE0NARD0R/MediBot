@@ -6,9 +6,7 @@ const mongoose = require('mongoose');
 const Conv = require('./services/mongo');
 
 const handlerAI = async (ctx) => {
-  /**
-   * OMITIR
-   */
+  
   const buffer = await downloadMediaMessage(ctx, "buffer");
   const pathTmpOgg = `${process.cwd()}/tmp/voice-note-${Date.now()}.ogg`;
   const pathTmpMp3 = `${process.cwd()}/tmp/voice-note-${Date.now()}.mp3`;
@@ -16,9 +14,6 @@ const handlerAI = async (ctx) => {
   await convertOggMp3(pathTmpOgg, pathTmpMp3);
   const text = await voiceToText(pathTmpMp3);
   return text
-  /**
-   * OMITIR
-   */
 };
 
 const dataToBase = async (ctx) => {
@@ -32,9 +27,17 @@ async function baseToImg(data) {
       const pathFile = `${process.cwd()}/tmp/${Date.now()}-image.jpeg`
       const binaryData = Buffer.from(data, 'base64')
       fs.writeFile(pathFile, binaryData)
-      console.log('image saves successfully')
       resolve(pathFile)
     })
+}
+
+async function baseToDoc(data) {
+  return new Promise( (resolve) => {
+    const pathFile = `${process.cwd()}/tmp/${Date.now()}-document.pdf`
+    const binaryData = Buffer.from(data, 'base64')
+    fs.writeFile(pathFile, binaryData)
+    resolve(pathFile)
+  })
 }
 
 const createMongo = async (ctx) => {
@@ -51,15 +54,15 @@ const createMongo = async (ctx) => {
   }
   }
 
-const createDate = (completeDate) => {
+const createDate = (completeDate, text = 'Hora de la consulta: ') => {
   const year = completeDate.getFullYear();
   const month = String(completeDate.getMonth() + 1).padStart(2, '0');
   const day = String(completeDate.getDate()).padStart(2, '0');
   const hour = String(completeDate.getHours()).padStart(2, '0');
   const minute = String(completeDate.getMinutes()).padStart(2, '0');
 
-  const date = `Hora de la consulta: ${year}/${month}/${day} - ${hour}:${minute}`;
+  const date = `${text} ${year}/${month}/${day} - ${hour}:${minute}`;
   return date;
 }
   
-module.exports = { handlerAI, dataToBase, createMongo, createDate, baseToImg };
+module.exports = { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc };
