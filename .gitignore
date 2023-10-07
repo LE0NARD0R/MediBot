@@ -4,6 +4,7 @@
 *.txt
 *.opus
 *.jpeg
+*.pdf
 COSAS.md
 package-lock.json
 bot.qr.png

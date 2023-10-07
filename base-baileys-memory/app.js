@@ -167,7 +167,6 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
 
 // modificar el prompt para que deje de ser tan jodon con la insistencia.
 // agregarle un código al médico para tener los síntomas de los pacientes.
-// recuperar los documentos
 // agregarle un flow que sea el flow del médico para conexión por parte del médico
 
 // Agregar guardar imágenes a la respuesta de la inteligencia artificial
