@@ -1,32 +1,20 @@
 [handleMsg]:  {
   key: {
-    remoteJid: '573012653312@s.whatsapp.net',
+    remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3AE3001E98747185F004',
+    id: '3EB0EAD23EA4D31AEFD0FF',
     participant: undefined
   },
-  messageTimestamp: 1694096791,
-  pushName: 'Christian Quintero',
+  messageTimestamp: 1696470186,
+  pushName: 'Leonardo Rodriguez',
   broadcast: false,
   message: Message {
-    audioMessage: AudioMessage {
-      url: 'https://mmg.whatsapp.net/v/t62.7117-24/40795482_137770042691286_3791046395120631905_n.enc?ccb=11-4&oh=01_AdQefFv8ixYmKG30Os_T9e8iTgYQ3GtTD7GgB-iX1Xt0Yw&oe=65214825&_nc_sid=000000&mms3=true',
-      mimetype: 'audio/ogg; codecs=opus',
-      fileSha256: [Uint8Array],
-      fileLength: [Long],
-      seconds: 3,
-      mediaKey: [Uint8Array],
-      fileEncSha256: [Uint8Array],
-      directPath: '/v/t62.7117-24/40795482_137770042691286_3791046395120631905_n.enc?ccb=11-4&oh=01_AdQefFv8ixYmKG30Os_T9e8iTgYQ3GtTD7GgB-iX1Xt0Yw&oe=65214825&_nc_sid=000000&_nc_hot=1694096791',
-      mediaKeyTimestamp: [Long],
-      streamingSidecar: [Uint8Array],
-      waveform: [Uint8Array]
-    },
+    conversation: 'resumen',
     messageContextInfo: MessageContextInfo {
       deviceListMetadata: [DeviceListMetadata],
       deviceListMetadataVersion: 2
     }
   },
-  body: '_event_voice_note__04f5b535-5413-4f19-bd60-488bd4b2d068',
-  from: '573012653312'
+  body: 'resumen',
+  from: '573017789134'
 }
