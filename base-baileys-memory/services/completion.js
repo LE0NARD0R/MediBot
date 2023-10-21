@@ -113,7 +113,6 @@ const resumeIA = async (ctx) => {
   });
 
   return resp.data.choices[0].message.content;
-
 }
 
-module.exports = { responseIA , resumeIA, translate};
+module.exports = { responseIA , resumeIA };

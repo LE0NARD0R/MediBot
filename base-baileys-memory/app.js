@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.DB_URL);
 const AWS = require("aws-sdk");
 AWS.config.loadFromPath("./config.json");
-const fs = require("fs");
 
 const {
   createBot,
@@ -81,7 +80,7 @@ const MockAdapter = require("@bot-whatsapp/database/mock");
 const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc } = require("./utils");
 const { responseIA, resumeIA} = require("./services/completion");
 const { textToSpeech } = require("./services/polly");
-const Conv = require("./services/mongo");
+const { Conv, medic } = require("./services/mongo");
 
 const interactions = [
   "Quiero asegurarte que he recibido tus mensajes y estoy aquí para escuchar y comprender tus inquietudes médicas.",
@@ -212,6 +211,15 @@ const flowDoc = addKeyword(EVENTS.DOCUMENT).addAction(async (ctx, ctxFn) => {
   await ctxFn.flowDynamic("Hemos guardado tu documento");
 });
 
+const flowMedico = addKeyword(['medico', 'médico']).addAnswer('*Ingrese su código*', {capture: true}, async (ctx, {fallBack, flowDynamic, gotoFlow}) => {
+  if (medic.exists({code: ctx.body})){
+    gotoFlow(flowMedicExist)
+  } else {
+    await flowDynamic('*Código errado, vuelva a intentar*')
+    fallBack()
+  }
+})
+
 const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
   async (ctx,ctxFn) => {
     try{
@@ -255,16 +263,11 @@ const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
   }
 );
 
-const flowMedico = addKeyword('medico').addAnswer('Ingrese su código', {capture: true}, (ctx, {fallback}) => {
-  console.log(ctx.body.length)
-  if( ctx.body.length != 5 ) {
-    return fallback()
-  }
-})
+const flowMedicExist = addKeywords(EXISTING_MEDIC)
 
 const main = async () => {
   const adapterDB = new MockAdapter();
-  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc, flowHola]);
+  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc, flowResumen, flowTextResponse, flowMedico ]);
   const adapterProvider = createProvider(BaileysProvider);
 
   createBot({
