@@ -212,6 +212,49 @@ const flowDoc = addKeyword(EVENTS.DOCUMENT).addAction(async (ctx, ctxFn) => {
   await ctxFn.flowDynamic("Hemos guardado tu documento");
 });
 
+const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
+  async (ctx,ctxFn) => {
+    try{
+      // In the following block of code we validate if a the message received already exits
+      const conversationExists = await Conv.exists({ name: ctx.pushName});
+      
+      if (conversationExists){
+        await ctxFn.flowDynamic("*MediBot:* Por favor, espera un momento mientras te escucho");
+        console.log("La conversación ya existe");
+      }else{
+        const phrase = getRandomItem(interactions);
+        const welcomeMessage = `*MediBot:* ¡Hola! ${ctx.pushName}, gracias por contactar a MediBot. ${phrase}`;
+        await ctxFn.flowDynamic(welcomeMessage);
+      }
+      //Here we instantiate a Date() object 
+      const completeDate = new Date();
+      const date = createDate(completeDate);
+
+      // In the next block of code we show in the terminal the text message received from the patient
+      console.log("🤖 Texto recibido....")
+      const receivedText = ctx.body;
+      const userMessage = `*${ctx.pushName}:* ${receivedText}`;
+      await ctxFn.flowDynamic(userMessage);
+      console.log(`🤖 Fin Texto recibido....: ${receivedText}`);
+
+      //Finally we are going to send a response to the text request patient
+      const response = await responseIA(receivedText, ctx, date);
+      const voiceId = getRandomItem(voiceid);
+      const path = await textToSpeech(voiceId, response);
+
+      const id = await Conv.findOne({ name: ctx.pushName }, "id");
+      const conv = await Conv.findById(id);
+
+      await ctxFn.flowDynamic("*MediBot:* " + response);
+      ctxFn.flowDynamic([{ body: "escucha", media: path }]);
+
+    }
+    catch (error){
+      console.error("Error en el flujo:", error);
+    }
+  }
+);
+
 const flowMedico = addKeyword('medico').addAnswer('Ingrese su código', {capture: true}, (ctx, {fallback}) => {
   console.log(ctx.body.length)
   if( ctx.body.length != 5 ) {
@@ -221,7 +264,7 @@ const flowMedico = addKeyword('medico').addAnswer('Ingrese su código', {capture
 
 const main = async () => {
   const adapterDB = new MockAdapter();
-  const adapterFlow = createFlow([ flowVoiceNote, flowMedico, flowImage, flowDoc, flowResumen]);
+  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc, flowHola]);
   const adapterProvider = createProvider(BaileysProvider);
 
   createBot({
