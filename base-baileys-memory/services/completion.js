@@ -98,7 +98,7 @@ const resumeIA = async (ctx) => {
 
   conversation.push({
     role: 'user',
-    content: 'Resume la conversación hasta el moemnto consus respectivas fechas. Máximo 120 palabras',
+    content: 'Resume la conversación hasta el moemnto con sus respectivas fechas. Máximo 120 palabras',
   })
 
   const configuration = new Configuration({
@@ -116,4 +116,4 @@ const resumeIA = async (ctx) => {
 
 }
 
-module.exports = { responseIA , resumeIA};
+module.exports = { responseIA , resumeIA, translate};

@@ -79,7 +79,7 @@ const keywords = [
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
 const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc } = require("./utils");
-const { responseIA, resumeIA } = require("./services/completion");
+const { responseIA, resumeIA} = require("./services/completion");
 const { textToSpeech } = require("./services/polly");
 const Conv = require("./services/mongo");
 
@@ -92,7 +92,7 @@ const interactions = [
 ];
 voiceid = ["Lupe", "Penelope", "Miguel"];
 
-const flowHola = addKeyword('resumen').addAction(async (ctx, ctxFn) => {
+const flowResumen = addKeyword('resumen').addAction(async (ctx, ctxFn) => {
   try {
     let i = 0
     let d = 0
@@ -150,7 +150,7 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
 
       const response = await responseIA(text, ctx, date);
       const voiceId = getRandomItem(voiceid);
-      const path = await textToSpeech(voiceId, response);
+      const path = await textToSpeech(voiceId, response[0].candidates[0].content);
 
       const id = await Conv.findOne({ name: ctx.pushName }, "id");
       const conv = await Conv.findById(id);
@@ -212,11 +212,16 @@ const flowDoc = addKeyword(EVENTS.DOCUMENT).addAction(async (ctx, ctxFn) => {
   await ctxFn.flowDynamic("Hemos guardado tu documento");
 });
 
-// const flowAdd =
+const flowMedico = addKeyword('medico').addAnswer('Ingrese su código', {capture: true}, (ctx, {fallback}) => {
+  console.log(ctx.body.length)
+  if( ctx.body.length != 5 ) {
+    return fallback()
+  }
+})
 
 const main = async () => {
   const adapterDB = new MockAdapter();
-  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc, flowHola]);
+  const adapterFlow = createFlow([ flowVoiceNote, flowMedico, flowImage, flowDoc, flowResumen]);
   const adapterProvider = createProvider(BaileysProvider);
 
   createBot({
