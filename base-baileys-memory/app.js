@@ -13,74 +13,13 @@ const {
   EVENTS,
 } = require("@bot-whatsapp/bot");
 
-const keywords = [
-  "Hola",
-  "Adiós",
-  "Por favor",
-  "Gracias",
-  "Lo siento",
-  "Sí",
-  "No",
-  "Cómo",
-  "Bien",
-  "Mal",
-  "Amigo",
-  "Familia",
-  "Trabajo",
-  "Casa",
-  "Comida",
-  "Café",
-  "Agua",
-  "Tiempo",
-  "Hoy",
-  "Mañana",
-  "Tarde",
-  "Noche",
-  "Ayuda",
-  "Dinero",
-  "Feliz",
-  "Triste",
-  "Amor",
-  "Odio",
-  "Risa",
-  "Llorar",
-  "Internet",
-  "Teléfono",
-  "Mensaje",
-  "Foto",
-  "Video",
-  "Música",
-  "Libro",
-  "Pregunta",
-  "Respuesta",
-  "Hombre",
-  "Mujer",
-  "Niño",
-  "Niña",
-  "Compañero",
-  "Reunión",
-  "Salir",
-  "Comprar",
-  "Vender",
-  "ole",
-  "buenos",
-  "buenas",
-  "ola",
-  "ayuda",
-  "siento",
-  "puede",
-  "puedo",
-  "foto",
-  "zona",
-  "poder",
-];
-
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
 const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc } = require("./utils");
-const { responseIA, resumeIA} = require("./services/completion");
+const { responseIA, resumeIA, medicResumeIA} = require("./services/completion");
 const { textToSpeech } = require("./services/polly");
-const { Conv, medic } = require("./services/mongo");
+const Conv = require("./models/userModel");
+const medic = require("./models/medicModel");
 
 const interactions = [
   "Quiero asegurarte que he recibido tus mensajes y estoy aquí para escuchar y comprender tus inquietudes médicas.",
@@ -89,33 +28,33 @@ const interactions = [
   "Estoy trabajando en revisar los detalles para proporcionarte una evaluación precisa. Por favor, ten paciencia mientras proceso la información.",
   "Estoy aquí para colaborar contigo en tu camino hacia el bienestar.",
 ];
-voiceid = ["Lupe", "Penelope", "Miguel"];
+const voiceid = ["Lupe", "Penelope", "Miguel"];
+let code = 0;
 
 const flowResumen = addKeyword('resumen').addAction(async (ctx, ctxFn) => {
   try {
-    let i = 0
-    let d = 0
-
     const id = await Conv.findOne({ name: ctx.pushName }, "id");
     const conv = await Conv.findById(id, 'image uploadImage docs uploadDocs');
 
     //Get back the images
-    for (img in conv.image){
+    for (i in conv.image){
       const path = await baseToImg(conv.image[i])
       ctxFn.flowDynamic([{ body: `${conv.uploadImage[i]}`, media: path }])
-      i+=1
     }
 
     //Get back the docs
-    for (doc in conv.docs){
+    for (d in conv.docs){
       const path = await baseToDoc(conv.docs[d])
       ctxFn.flowDynamic([{ body: `${conv.uploadDocs[d]}`, media: path }])
-      d += 1
     }
 
     //Response with the resume
     const response = await resumeIA(ctx);
+    const voiceId = getRandomItem(voiceid);
+    const path = await textToSpeech(voiceId, response);
     await ctxFn.flowDynamic("*MediBot:* " + response);
+    ctxFn.flowDynamic([{ body: "escucha", media: path }]);
+
   }catch (error) {
     console.error("Error al recuperar las imágenes:", error);
   }
@@ -149,10 +88,7 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
 
       const response = await responseIA(text, ctx, date);
       const voiceId = getRandomItem(voiceid);
-      const path = await textToSpeech(voiceId, response[0].candidates[0].content);
-
-      const id = await Conv.findOne({ name: ctx.pushName }, "id");
-      const conv = await Conv.findById(id);
+      const path = await textToSpeech(voiceId, response);
 
       await ctxFn.flowDynamic("*MediBot:* " + response);
       ctxFn.flowDynamic([{ body: "escucha", media: path }]);
@@ -165,9 +101,6 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
 );
 
 // modificar el prompt para que deje de ser tan jodon con la insistencia.
-// agregarle un código al médico para tener los síntomas de los pacientes.
-// agregarle un flow que sea el flow del médico para conexión por parte del médico
-
 // Agregar guardar imágenes a la respuesta de la inteligencia artificial
 const flowImage = addKeyword(EVENTS.MEDIA).addAction(async (ctx, ctxFn) => {
   console.log("Imagen");
@@ -212,11 +145,28 @@ const flowDoc = addKeyword(EVENTS.DOCUMENT).addAction(async (ctx, ctxFn) => {
 });
 
 const flowMedico = addKeyword(['medico', 'médico']).addAnswer('*Ingrese su código*', {capture: true}, async (ctx, {fallBack, flowDynamic, gotoFlow}) => {
-  if (medic.exists({code: ctx.body})){
-    gotoFlow(flowMedicExist)
-  } else {
-    await flowDynamic('*Código errado, vuelva a intentar*')
-    fallBack()
+  try {
+    if (medic.exists({code: ctx.body})){
+      code = ctx.body
+      const id = await medic.findOne({ code: code}, "id")
+      const medico = await medic.findById(id)
+      const patients = []
+      for (p in medico.patients){
+      patients.push(medico.patients[p])
+      }
+      if (patients.length != 0){
+        await flowDynamic(`Bienvenido ${medico.name}, es un gusto tenerlo de vuelta. \n Sus pacientes son: *${patients}*. `)
+        await gotoFlow(flowPatientSelection)
+      }else {
+        await flowDynamic('No tiene pacientes')
+      }
+      
+    } else {
+      await flowDynamic('*Código errado, vuelva a intentar*')
+      fallBack()
+    }
+  } catch (error) {
+    console.error("Error en el flujo del médico:", error);
   }
 })
 
@@ -227,7 +177,7 @@ const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
       const conversationExists = await Conv.exists({ name: ctx.pushName});
       
       if (conversationExists){
-        await ctxFn.flowDynamic("*MediBot:* Por favor, espera un momento mientras te escucho");
+        await ctxFn.flowDynamic("*MediBot:* Por favor, espera un momento.");
         console.log("La conversación ya existe");
       }else{
         const phrase = getRandomItem(interactions);
@@ -250,9 +200,6 @@ const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
       const voiceId = getRandomItem(voiceid);
       const path = await textToSpeech(voiceId, response);
 
-      const id = await Conv.findOne({ name: ctx.pushName }, "id");
-      const conv = await Conv.findById(id);
-
       await ctxFn.flowDynamic("*MediBot:* " + response);
       ctxFn.flowDynamic([{ body: "escucha", media: path }]);
 
@@ -263,11 +210,46 @@ const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
   }
 );
 
-const flowMedicExist = addKeywords(EXISTING_MEDIC)
+const flowPatientSelection = addKeyword('PATIENT_SELECTION').addAnswer('Escriba el nombre del paciente del cuál quiere un resumen.', {capture: true}, async (ctx, {fallBack, flowDynamic, gotoFlow}) => {
+  const id = await medic.findOne({ code: code}, "id")
+  const medico = await medic.findById(id)
+
+  try {
+    if (medico.patients.includes(ctx.body)){
+      // aquí estoy, crear la función que haga el resumen del paciente que se pida: medicResumeIA
+  
+      const id = await Conv.findOne({ name: ctx.body }, "id");
+      const conv = await Conv.findById(id, 'image uploadImage docs uploadDocs');
+  
+      for (i in conv.image){
+        const path = await baseToImg(conv.image[i])
+        await flowDynamic([{ body: `${conv.uploadImage[i]}`, media: path }])
+      }
+  
+      //Get back the docs
+      for (d in conv.docs){
+        const path = await baseToDoc(conv.docs[d])
+        await flowDynamic([{ body: `${conv.uploadDocs[d]}`, media: path }])
+      }
+  
+      const resp = await medicResumeIA(ctx.body)
+      const response = resp.data.choices[0].message.content
+      const voiceId = getRandomItem(voiceid);
+      const path = await textToSpeech(voiceId, response);
+      await flowDynamic("*MediBot:* " + response);
+      await flowDynamic([{ body: "escucha", media: path }]);
+    }else{
+      await flowDynamic('El nombre que ingresó no hace parte de la lista de sus pacientes.')
+      fallBack()
+    }
+  } catch (error) {
+    console.error("Error en info pacientes:", error);
+  }
+})
 
 const main = async () => {
   const adapterDB = new MockAdapter();
-  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc, flowResumen, flowTextResponse, flowMedico ]);
+  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc, flowResumen, flowTextResponse, flowMedico, flowPatientSelection ]);
   const adapterProvider = createProvider(BaileysProvider);
 
   createBot({

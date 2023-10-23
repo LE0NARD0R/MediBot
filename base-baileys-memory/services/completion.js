@@ -1,12 +1,11 @@
 const { Configuration, OpenAIApi } = require("openai");
 const mongoose = require('mongoose');
-const Conv = require('./mongo');
+const Conv = require('../models/userModel');
 
 
 const responseIA = async (text, ctx, date = '0000') => {
 
   // create or save the new interaction of the user
-  let i = 0
   const conversation = []
   if (await Conv.exists({name: ctx.pushName})){
     const id = await Conv.findOne({name: ctx.pushName}, '_id')
@@ -39,12 +38,11 @@ const responseIA = async (text, ctx, date = '0000') => {
     conv.content.unshift(content)
   }
 
-  for (conver in conv.role){      
+  for (c in conv.role){      
     conversation.push({
-      role: conv.role[i],
-      content: conv.content[i],
+      role: conv.role[c],
+      content: conv.content[c],
     })
-    i += 1;
   }
 
   // Using ChatGPT
@@ -67,7 +65,6 @@ const responseIA = async (text, ctx, date = '0000') => {
 };
 
 const resumeIA = async (ctx) => {
-  let i = 0
   const conversation = []
 
   const id = await Conv.findOne({name: ctx.pushName}, '_id')
@@ -88,12 +85,11 @@ const resumeIA = async (ctx) => {
   conv.role.shift()
   conv.content.shift()
 
-  for (conver in conv.role){      
+  for (c in conv.role){      
     conversation.push({
-      role: conv.role[i],
-      content: conv.content[i],
+      role: conv.role[c],
+      content: conv.content[c],
     })
-    i += 1;
   }
 
   conversation.push({
@@ -115,4 +111,52 @@ const resumeIA = async (ctx) => {
   return resp.data.choices[0].message.content;
 }
 
-module.exports = { responseIA , resumeIA };
+const medicResumeIA = async (name) => {
+  const conversation = []
+
+  const id = await Conv.findOne({name: name}, '_id')
+  const conv = await Conv.findById(id, 'role content')
+  const len = conv.role.length
+
+  if (len == 38) {
+    const assistant = conv.role.shift()
+    const content = conv.content.shift()
+    conv.role.shift()
+    conv.role.shift()
+    conv.content.shift()
+    conv.content.shift()
+    conv.role.unshift(assistant)
+    conv.content.unshift(content)
+  }
+
+  conv.role.shift()
+  conv.content.shift()
+
+  for (c in conv.role){      
+    conversation.push({
+      role: conv.role[c],
+      content: conv.content[c],
+    })
+  }
+
+  conversation.push({
+    role: 'user',
+    content: 'Resume la conversación hasta el moemnto con sus respectivas fechas. Máximo 120 palabras',
+  })
+
+  const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+  const openai = new OpenAIApi(configuration);
+  return new Promise( (resolve) => {
+    const resp = openai.createChatCompletion({
+      model: 'gpt-3.5-turbo', 
+      messages: conversation,
+    }).catch((error) => {
+      console.log(`OPENAI ERR: ${error}`);
+    });
+    resolve(resp)
+  })
+}
+
+module.exports = { responseIA , resumeIA, medicResumeIA };

@@ -17,13 +17,5 @@ const convSchema = new mongoose.Schema({
   },
 })
 
-const medicSchema = mongoose.Schema({
-  name: String, 
-  code: Number, 
-  patients: [String]
-})
 
-const conv = mongoose.model( 'conv', convSchema);
-const medic = mongoose.model( 'medic', medicSchema);
-
-module.exports = {conv, medic}
+module.exports = mongoose.model('conv', convSchema);

@@ -3,7 +3,7 @@ const fs = require('node:fs/promises');
 const { convertOggMp3 } = require('./services/convert');
 const { voiceToText } = require('./services/whisper');
 const mongoose = require('mongoose');
-const Conv = require('./services/mongo');
+const Conv = require('./models/userModel');
 
 const handlerAI = async (ctx) => {
   
