@@ -2,39 +2,69 @@
   key: {
     remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3EB0B98FB2EB4AB33A2217',
+    id: '3EB06EE9CD9A93B712114D',
     participant: undefined
   },
-  messageTimestamp: 1697926341,
+  messageTimestamp: 1698204845,
   pushName: 'Leonardo Rodriguez',
   broadcast: false,
-  message: Message {
-    conversation: 'medico',
-    messageContextInfo: MessageContextInfo {
-      deviceListMetadata: [DeviceListMetadata],
-      deviceListMetadataVersion: 2
-    }
-  },
-  body: 'medico',
+  messageStubType: 2,
+  messageStubParameters: [ 'No matching sessions found for message' ],
+  body: undefined,
   from: '573017789134'
 }
 [handleMsg]:  {
   key: {
     remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3EB05B1237E2F2A3C26977',
+    id: '3EB06EE9CD9A93B712114D',
     participant: undefined
   },
-  messageTimestamp: 1697926343,
+  messageTimestamp: 1698204845,
+  pushName: 'Leonardo Rodriguez',
+  broadcast: false,
+  messageStubType: 2,
+  messageStubParameters: [ 'No matching sessions found for message' ],
+  body: undefined,
+  from: '573017789134'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573017789134@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB06EE9CD9A93B712114D',
+    participant: undefined
+  },
+  messageTimestamp: 1698204846,
   pushName: 'Leonardo Rodriguez',
   broadcast: false,
   message: Message {
-    conversation: 'asd',
+    conversation: 'holiwiiiiiiiiiiis',
     messageContextInfo: MessageContextInfo {
       deviceListMetadata: [DeviceListMetadata],
       deviceListMetadataVersion: 2
     }
   },
-  body: 'asd',
+  body: 'holiwiiiiiiiiiiis',
+  from: '573017789134'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573017789134@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB010B376FBBA322EDA09',
+    participant: undefined
+  },
+  messageTimestamp: 1698204850,
+  pushName: 'Leonardo Rodriguez',
+  broadcast: false,
+  message: Message {
+    conversation: 'Oliver Jiménez',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'Oliver Jiménez',
   from: '573017789134'
 }

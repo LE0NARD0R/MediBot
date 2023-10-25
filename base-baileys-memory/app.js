@@ -15,7 +15,7 @@ const {
 
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
-const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc } = require("./utils");
+const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor } = require("./utils");
 const { responseIA, resumeIA, medicResumeIA} = require("./services/completion");
 const { textToSpeech } = require("./services/polly");
 const Conv = require("./models/userModel");
@@ -30,6 +30,8 @@ const interactions = [
 ];
 const voiceid = ["Lupe", "Penelope", "Miguel"];
 let code = 0;
+let receivedText= ''
+let flowBackTo = ''
 
 const flowResumen = addKeyword('resumen').addAction(async (ctx, ctxFn) => {
   try {
@@ -177,20 +179,30 @@ const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
       const conversationExists = await Conv.exists({ name: ctx.pushName});
       
       if (conversationExists){
-        await ctxFn.flowDynamic("*MediBot:* Por favor, espera un momento.");
-        console.log("La conversación ya existe");
+        await ctxFn.flowDynamic("*MediBot:* Por favor, espera un momento mientras analizo tus síntomas.");
       }else{
         const phrase = getRandomItem(interactions);
         const welcomeMessage = `*MediBot:* ¡Hola! ${ctx.pushName}, gracias por contactar a MediBot. ${phrase}`;
+        createMongo(ctx)
         await ctxFn.flowDynamic(welcomeMessage);
       }
+
+      const doctor = await confirmateDoctor(ctx)
+      if (!doctor){
+        flowBackTo = flowTextResponse
+        const receivedText = ctx.body;
+        ctxFn.gotoFlow(flowPrueba)
+      }else{
+        const receivedText = ctx.body;//esto no funciona como debería la vd 
+      }
+
+      /*
       //Here we instantiate a Date() object 
       const completeDate = new Date();
       const date = createDate(completeDate);
 
       // In the next block of code we show in the terminal the text message received from the patient
       console.log("🤖 Texto recibido....")
-      const receivedText = ctx.body;
       const userMessage = `*${ctx.pushName}:* ${receivedText}`;
       await ctxFn.flowDynamic(userMessage);
       console.log(`🤖 Fin Texto recibido....: ${receivedText}`);
@@ -203,9 +215,10 @@ const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
       await ctxFn.flowDynamic("*MediBot:* " + response);
       ctxFn.flowDynamic([{ body: "escucha", media: path }]);
 
+      */
     }
     catch (error){
-      console.error("Error en el flujo:", error);
+      console.error("Error en el flujo de texto:", error);
     }
   }
 );
@@ -247,9 +260,31 @@ const flowPatientSelection = addKeyword('PATIENT_SELECTION').addAnswer('Escriba 
   }
 })
 
+const flowPrueba = addKeyword('PRUEBA_CONSTANTE').addAnswer('Hemos notado que no cuenta con un médico, escriba el nombre de su médico:', {capture: true}, async (ctx, {fallBack, flowDynamic, gotoFlow}) => {
+  try {
+    const medicExists = await medic.exists({name: ctx.body})
+    if(!medicExists) {
+      await flowDynamic('*Ese médico no se encuentra registrado en MediBot*')
+      fallBack()
+    } else {
+      const update = {doctor: ctx.body}
+      let id = await medic.findOne({name: ctx.body}, '_id')
+      const medico = await medic.findById(id, 'patients')
+      medico.patients.push(ctx.pushName)
+      medico.save()
+      id = await Conv.findOne({name: ctx.pushName}, '_id')
+      const conv = await Conv.findByIdAndUpdate(id, update, {new: true})
+      await flowDynamic('Se ha guardado su médico')
+      ctx = newCtx
+      gotoFlow(flowBackTo)
+    }
+  } catch (error) {
+    console.log('Error en el flujo de elección de médico: ', error)
+  }
+})
 const main = async () => {
   const adapterDB = new MockAdapter();
-  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc, flowResumen, flowTextResponse, flowMedico, flowPatientSelection ]);
+  const adapterFlow = createFlow([ flowVoiceNote, flowImage, flowDoc, flowResumen, flowTextResponse, flowMedico, flowPatientSelection, flowPrueba ]);
   const adapterProvider = createProvider(BaileysProvider);
 
   createBot({

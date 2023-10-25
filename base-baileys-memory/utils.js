@@ -4,6 +4,7 @@ const { convertOggMp3 } = require('./services/convert');
 const { voiceToText } = require('./services/whisper');
 const mongoose = require('mongoose');
 const Conv = require('./models/userModel');
+const medic = require('./models/medicModel')
 
 const handlerAI = async (ctx) => {
   
@@ -48,7 +49,7 @@ const createMongo = async (ctx) => {
       name : ctx.pushName,
       number : ctx.from,
       role:['assistant'],
-      content: ['Eres MediBot un asistente presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico en máximo 100 palabras. Sólo debes responder preguntas asociadas con el ámbito médico, si alguien pregunta algo fuera del ámbito médico debes decir que no puedes responder su pregunta. Además, puedes recibir imágenes, exámenes y pdf, no los analizas, pero si los guardas.'],
+      content: ['Eres MediBot un asistente, con memoria, presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico de manera resumida. Sólo debes responder preguntas asociadas con el ámbito médico, si alguien pregunta algo fuera del ámbito médico debes decir que no puedes responder su pregunta. Además, puedes recibir imágenes, exámenes y pdf, no los analizas, pero si los guardas.'],
     })
     return ('se creó')
   }
@@ -64,5 +65,15 @@ const createDate = (completeDate, text = 'Hora de la consulta: ') => {
   const date = `${text} ${year}/${month}/${day} - ${hour}:${minute}`;
   return date;
 }
+
+const confirmateDoctor = async (ctx) => {
+  const id = await Conv.findOne( {name: ctx.pushName}, 'id')
+  const conv = await Conv.findById(id, 'doctor name')
+  if (conv.doctor){
+    return conv.doctor
+  }else{
+    return false
+  }
+}
   
-module.exports = { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc };
+module.exports = { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor };
