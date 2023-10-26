@@ -2,69 +2,79 @@
   key: {
     remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3EB06EE9CD9A93B712114D',
+    id: '3EB0803E397098D498F0B6',
     participant: undefined
   },
-  messageTimestamp: 1698204845,
-  pushName: 'Leonardo Rodriguez',
-  broadcast: false,
-  messageStubType: 2,
-  messageStubParameters: [ 'No matching sessions found for message' ],
-  body: undefined,
-  from: '573017789134'
-}
-[handleMsg]:  {
-  key: {
-    remoteJid: '573017789134@s.whatsapp.net',
-    fromMe: false,
-    id: '3EB06EE9CD9A93B712114D',
-    participant: undefined
-  },
-  messageTimestamp: 1698204845,
-  pushName: 'Leonardo Rodriguez',
-  broadcast: false,
-  messageStubType: 2,
-  messageStubParameters: [ 'No matching sessions found for message' ],
-  body: undefined,
-  from: '573017789134'
-}
-[handleMsg]:  {
-  key: {
-    remoteJid: '573017789134@s.whatsapp.net',
-    fromMe: false,
-    id: '3EB06EE9CD9A93B712114D',
-    participant: undefined
-  },
-  messageTimestamp: 1698204846,
+  messageTimestamp: 1698290092,
   pushName: 'Leonardo Rodriguez',
   broadcast: false,
   message: Message {
-    conversation: 'holiwiiiiiiiiiiis',
+    conversation: 'medico',
     messageContextInfo: MessageContextInfo {
       deviceListMetadata: [DeviceListMetadata],
       deviceListMetadataVersion: 2
     }
   },
-  body: 'holiwiiiiiiiiiiis',
+  body: 'medico',
   from: '573017789134'
 }
 [handleMsg]:  {
   key: {
     remoteJid: '573017789134@s.whatsapp.net',
     fromMe: false,
-    id: '3EB010B376FBBA322EDA09',
+    id: '3EB007E0AD339C42B3D010',
     participant: undefined
   },
-  messageTimestamp: 1698204850,
+  messageTimestamp: 1698290096,
   pushName: 'Leonardo Rodriguez',
   broadcast: false,
   message: Message {
-    conversation: 'Oliver Jiménez',
+    conversation: '54321',
     messageContextInfo: MessageContextInfo {
       deviceListMetadata: [DeviceListMetadata],
       deviceListMetadataVersion: 2
     }
   },
-  body: 'Oliver Jiménez',
+  body: '54321',
+  from: '573017789134'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573017789134@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0EF2EF67239EFBA55AF',
+    participant: undefined
+  },
+  messageTimestamp: 1698290103,
+  pushName: 'Leonardo Rodriguez',
+  broadcast: false,
+  message: Message {
+    conversation: 'Leonardo Rodriguez',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'Leonardo Rodriguez',
+  from: '573017789134'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573017789134@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB09E5964953E64F368AA',
+    participant: undefined
+  },
+  messageTimestamp: 1698290136,
+  pushName: 'Leonardo Rodriguez',
+  broadcast: false,
+  message: Message {
+    conversation: 'Necesita una buena pony',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'Necesita una buena pony',
   from: '573017789134'
 }
