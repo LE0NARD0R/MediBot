@@ -91,12 +91,12 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
         flowBackTo = flowTextResponse
         receivedText = text;
         ctxFn.gotoFlow(flowPrueba)
-      }
+      // }arreeglar esto de aqui se quitó la selección de médico
 
       const completeDate = new Date();
       const date = createDate(completeDate);
 
-      let specialty = await clasificationIA(receivedText)
+      let specialty = await clasificationIA(text)
       specialty = specialty.data.choices[0].message.content
       saveClasification(specialty, ctx)
       const response = await responseIA(text, ctx, specialty, date);
