@@ -92,7 +92,7 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
         receivedText = text;
         ctxFn.gotoFlow(flowPrueba)
       // }arreeglar esto de aqui se quitó la selección de médico
-
+      }
       const completeDate = new Date();
       const date = createDate(completeDate);
 
