@@ -1,50 +1,65 @@
 [handleMsg]:  {
   key: {
-    remoteJid: '573017789134@s.whatsapp.net',
+    remoteJid: '573214461217@s.whatsapp.net',
     fromMe: false,
-    id: '3EB028DEADE5F5316465AA',
+    id: '3A2F0E622C235DFBD524',
     participant: undefined
   },
-  messageTimestamp: 1698509496,
-  pushName: 'Leonardo Rodriguez',
+  messageTimestamp: 1698529837,
+  pushName: 'Javier Orozco',
   broadcast: false,
   messageStubType: 2,
-  messageStubParameters: [ 'No matching sessions found for message' ],
+  messageStubParameters: [ 'Bad MAC' ],
   body: undefined,
-  from: '573017789134'
+  from: '573214461217'
 }
 [handleMsg]:  {
   key: {
-    remoteJid: '573017789134@s.whatsapp.net',
+    remoteJid: '573214461217@s.whatsapp.net',
     fromMe: false,
-    id: '3EB028DEADE5F5316465AA',
+    id: '3A2F0E622C235DFBD524',
     participant: undefined
   },
-  messageTimestamp: 1698509496,
-  pushName: 'Leonardo Rodriguez',
+  messageTimestamp: 1698529837,
+  pushName: 'Javier Orozco',
   broadcast: false,
   messageStubType: 2,
-  messageStubParameters: [ 'No matching sessions found for message' ],
+  messageStubParameters: [ 'Bad MAC' ],
   body: undefined,
-  from: '573017789134'
+  from: '573214461217'
 }
 [handleMsg]:  {
   key: {
-    remoteJid: '573017789134@s.whatsapp.net',
+    remoteJid: '573214461217@s.whatsapp.net',
     fromMe: false,
-    id: '3EB028DEADE5F5316465AA',
+    id: '3A2F0E622C235DFBD524',
     participant: undefined
   },
-  messageTimestamp: 1698509496,
-  pushName: 'Leonardo Rodriguez',
+  messageTimestamp: 1698529838,
+  pushName: 'Javier Orozco',
+  broadcast: false,
+  messageStubType: 2,
+  messageStubParameters: [ 'Bad MAC' ],
+  body: undefined,
+  from: '573214461217'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '573214461217@s.whatsapp.net',
+    fromMe: false,
+    id: '3A2F0E622C235DFBD524',
+    participant: undefined
+  },
+  messageTimestamp: 1698529838,
+  pushName: 'Javier Orozco',
   broadcast: false,
   message: Message {
-    conversation: 'holiiiiiiiiiiiii',
+    conversation: 'Hola medibot , te encuentras disponible ?',
     messageContextInfo: MessageContextInfo {
       deviceListMetadata: [DeviceListMetadata],
       deviceListMetadataVersion: 2
     }
   },
-  body: 'holiiiiiiiiiiiii',
-  from: '573017789134'
+  body: 'Hola medibot , te encuentras disponible ?',
+  from: '573214461217'
 }

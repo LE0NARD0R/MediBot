@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Conv = require('../models/userModel');
 
 
-const responseIA = async (text, ctx, date = '0000') => {
+const responseIA = async (text, ctx, specialty,  date = '0000') => {
 
   // create or save the new interaction of the user
   const conversation = []
@@ -11,14 +11,14 @@ const responseIA = async (text, ctx, date = '0000') => {
     const id = await Conv.findOne({name: ctx.pushName}, '_id')
     const conv = await Conv.findById(id)
     conv.role.push('user')
-    conv.content.push('Estos son mis siguientes síntomas'+ text + 'espero tus recomendaciones y tu posible diagnóstio en máximo 100 palabras. ( ' + date + ' )')    
+    conv.content.push('Estos son mis siguientes síntomas'+ text + 'espero tus recomendaciones y tu posible diagnóstio en máximo 100 palabras. Esta consulta hace parte del área de: '+ specialty +' ( ' + date + ' )')    
     await conv.save()
   } else {
       const conv = await Conv.create({
         name : ctx.pushName,
         number : ctx.from,
         role:['assistant', 'user'],
-        content: ['Eres MediBot un asistente, con memoria, presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico de manera resumida. Sólo debes responder preguntas asociadas con el ámbito médico, si alguien pregunta algo fuera del ámbito médico debes decir que no puedes responder su pregunta. Además, puedes recibir imágenes, exámenes y pdf, no los analizas, pero si los guardas.', 'Te voy a dar unos síntomas, sin reemplazar el diagnóstico médico dame recomendaciones y qué enfermedad puedo estar presentando de manera resumida. Máximo 100 palabras. Los síntomas son los siguientes: ' + text + '. ( ' + date + ' )'],
+        content: ['Eres MediBot un asistente, con memoria, presto a ayudar a los demás con sus problemas de salud, no reemplazas un diagnóstico  médico pero das recomendaciones sobre qué hacer y das un posbile diagóstico médico de manera resumida. Sólo debes responder preguntas asociadas con el ámbito médico, si alguien pregunta algo fuera del ámbito médico debes decir que no puedes responder su pregunta. Además, puedes recibir imágenes, exámenes y pdf, no los analizas, pero si los guardas.', 'Te voy a dar unos síntomas, sin reemplazar el diagnóstico médico dame recomendaciones y qué enfermedad puedo estar presentando de manera resumida. Máximo 100 palabras. Los síntomas son los siguientes: ' + text + '. Esta consulta hace parte del área de: '+ specialty +' ( ' + date + ' )'],
     })
   }
 
@@ -58,10 +58,15 @@ const responseIA = async (text, ctx, date = '0000') => {
   });
 
   // Saving the response
-  conv.role.push('assistant')
-  conv.content.push(resp.data.choices[0].message.content)
-  conv.save()
-  return resp.data.choices[0].message.content;
+  try {
+    conv.role.push('assistant')
+    conv.content.push(resp.data.choices[0].message.content)
+    conv.save()
+    return resp.data.choices[0].message.content;
+  } catch (error) {
+    return error
+  }
+  
 };
 
 const resumeIA = async (ctx) => {
@@ -111,10 +116,12 @@ const resumeIA = async (ctx) => {
   return resp.data.choices[0].message.content;
 }
 
-const medicResumeIA = async (name) => {
+const medicResumeIA = async (name, code) => {
   const conversation = []
 
-  const id = await Conv.findOne({name: name}, '_id')
+  let id = await medic.findOne({code: code}, '_id')
+  const medic = await medic.findById(id, 'specialty')
+  id = await Conv.findOne({name: name}, '_id')
   const conv = await Conv.findById(id, 'role content')
   const len = conv.role.length
 
@@ -130,13 +137,15 @@ const medicResumeIA = async (name) => {
   }
 
   conv.role.shift()
-  conv.content.shift()
+  conv.content.shift() 
 
-  for (c in conv.role){      
-    conversation.push({
-      role: conv.role[c],
-      content: conv.content[c],
-    })
+  for (c in conv.role){   
+    if (conv.content[c].includes(specialty)){
+      conversation.push({
+        role: conv.role[c],
+        content: conv.content[c],
+      })
+    }       
   }
 
   conversation.push({
@@ -163,7 +172,7 @@ const medicResumeIA = async (name) => {
 const clasificationIA = async (text) => {
 
   const conversation = [
-    { role: 'assistant', content: 'Debes clasificar cada mensaje como alguna de estas especialidades médicas: Odonotología, Cardiología, Dermatología, Ginecología, Ortopedia, Neurología, Pediatría, Oftalmología, Psiquiatría, Medicina General, Endocrinología' },
+    { role: 'assistant', content: 'Debes clasificar cada mensaje como una y sólo una de estas especialidades médicas: Odonotología, Cardiología, Dermatología, Ginecología, Ortopedia, Neurología, Pediatría, Oftalmología, Psiquiatría, Odontología, Endocrinología' },
     { role: 'user', content: text } 
 ]
 

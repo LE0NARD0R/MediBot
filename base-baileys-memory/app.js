@@ -15,7 +15,7 @@ const {
 
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
-const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor } = require("./utils");
+const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor, saveClasification } = require("./utils");
 const { responseIA, resumeIA, medicResumeIA, clasificationIA} = require("./services/completion");
 const { textToSpeech } = require("./services/polly");
 const Conv = require("./models/userModel");
@@ -96,7 +96,10 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
       const completeDate = new Date();
       const date = createDate(completeDate);
 
-      const response = await responseIA(text, ctx, date);
+      let specialty = await clasificationIA(receivedText)
+      specialty = specialty.data.choices[0].message.content
+      saveClasification(specialty, ctx)
+      const response = await responseIA(text, ctx, specialty, date);
       const voiceId = getRandomItem(voiceid);
       const path = await textToSpeech(voiceId, response);
 
@@ -215,7 +218,11 @@ const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
       console.log(`🤖 Fin Texto recibido....: ${receivedText}`);
 
       //Finally we are going to send a response to the text request patient
-      const response = await responseIA(receivedText, ctx, date);
+      let specialty = await clasificationIA(receivedText)
+      specialty = specialty.data.choices[0].message.content
+      console.log(specialty)
+      saveClasification(specialty, ctx)
+      const response = await responseIA(receivedText, ctx, specialty, date);
       const voiceId = getRandomItem(voiceid);
       const path = await textToSpeech(voiceId, response);
 
@@ -249,7 +256,7 @@ const flowPatientSelection = addKeyword('PATIENT_SELECTION').addAnswer('Escriba 
         await flowDynamic([{ body: `${conv.uploadDocs[d]}`, media: path }])
       }
   
-      const resp = await medicResumeIA(ctx.body)
+      const resp = await medicResumeIA(ctx.body, code)
       const response = resp.data.choices[0].message.content
       const voiceId = getRandomItem(voiceid);
       const path = await textToSpeech(voiceId, response);

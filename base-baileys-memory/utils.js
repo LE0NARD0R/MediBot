@@ -75,5 +75,20 @@ const confirmateDoctor = async (ctx) => {
     return false
   }
 }
+
+const saveClasification = async (specialty, ctx) => {
+  const medico = await medic.findOne({ specialty: specialty });
   
-module.exports = { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor };
+  if (medico) {
+    // Si se encontró un médico con la especialidad, verifica si ctx.pushName está en la lista de pacientes
+    if (!medico.patients.includes(ctx.pushName)) {
+      medico.patients.push(ctx.pushName);
+      await medico.save(); // Asegúrate de guardar los cambios en la base de datos
+    }
+  } else {
+    // Puedes manejar el caso en el que no se encontró un médico con la especialidad
+    console.log(`No se encontró un médico con la especialidad: ${specialty}`);
+  }
+}
+  
+module.exports = { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor, saveClasification};
