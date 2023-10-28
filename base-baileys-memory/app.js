@@ -273,6 +273,7 @@ const flowPrueba = addKeyword('PRUEBA_CONSTANTE').addAnswer('Hemos notado que no
       await flowDynamic('*Ese médico no se encuentra registrado en MediBot*')
       fallBack()
     } else {
+      // dar la posibilidad de recibir un audio 
       const update = {doctor: ctx.body}
       let id = await medic.findOne({name: ctx.body}, '_id')
       const medico = await medic.findById(id, 'patients')
