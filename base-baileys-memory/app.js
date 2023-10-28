@@ -16,7 +16,7 @@ const {
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
 const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor } = require("./utils");
-const { responseIA, resumeIA, medicResumeIA} = require("./services/completion");
+const { responseIA, resumeIA, medicResumeIA, clasificationIA} = require("./services/completion");
 const { textToSpeech } = require("./services/polly");
 const Conv = require("./models/userModel");
 const medic = require("./models/medicModel");

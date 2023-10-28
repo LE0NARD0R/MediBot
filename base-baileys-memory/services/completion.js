@@ -159,4 +159,27 @@ const medicResumeIA = async (name) => {
   })
 }
 
-module.exports = { responseIA , resumeIA, medicResumeIA };
+
+const clasificationIA = async (text) => {
+
+  const conversation = [
+    { role: 'assistant', content: 'Debes clasificar cada mensaje como alguna de estas especialidades médicas: Odonotología, Cardiología, Dermatología, Ginecología, Ortopedia, Neurología, Pediatría, Oftalmología, Psiquiatría, Medicina General, Endocrinología' },
+    { role: 'user', content: text } 
+]
+
+  const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+  const openai = new OpenAIApi(configuration);
+  return new Promise( (resolve) => {
+    const resp = openai.createChatCompletion({
+      model: 'gpt-3.5-turbo', 
+      messages: conversation,
+    }).catch((error) => {
+      console.log(`OPENAI ERR: ${error}`);
+    });
+    resolve(resp)
+  })
+}
+
+module.exports = { responseIA , resumeIA, medicResumeIA, clasificationIA };
