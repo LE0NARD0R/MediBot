@@ -77,18 +77,36 @@ const confirmateDoctor = async (ctx) => {
 }
 
 const saveClasification = async (specialty, ctx) => {
-  const medico = await medic.findOne({ specialty: specialty });
-  
-  if (medico) {
-    // Si se encontró un médico con la especialidad, verifica si ctx.pushName está en la lista de pacientes
-    if (!medico.patients.includes(ctx.pushName)) {
-      medico.patients.push(ctx.pushName);
-      await medico.save(); // Asegúrate de guardar los cambios en la base de datos
+  try {
+    const medico = await medic.findOne({ specialty: specialty });
+    if (medico) {
+      // Si se encontró un médico con la especialidad, verifica si ctx.pushName está en la lista de pacientes
+      if (!medico.patients.includes(ctx.pushName)) {
+        medico.patients.push(ctx.pushName);
+        await medico.save(); // Asegúrate de guardar los cambios en la base de datos
+      }
+    } else {
+      // Puedes manejar el caso en el que no se encontró un médico con la especialidad
+      console.log(`No se encontró un médico con la especialidad: ${specialty}`);
     }
-  } else {
-    // Puedes manejar el caso en el que no se encontró un médico con la especialidad
-    console.log(`No se encontró un médico con la especialidad: ${specialty}`);
+  } catch (error) {
+   console.log(`Se ha producido un error en guardar la clasificación de la especialidad: ${error}`);
   }
 }
   
-module.exports = { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor, saveClasification};
+
+const saveResponse = async (response, specialty, ctx) => {
+  try {
+    const id = await Conv.findOne({ name: ctx.pushName }, "_id");
+    const conv = await Conv.findById(id);
+
+    // Saving the response
+    conv.role.push("assistant");
+    conv.content.push(response);
+    conv.specialty.push(specialty);
+    conv.save();
+  } catch (error) {
+    console.log(`Error al guardar la respuesta: ${error}`)
+  }
+}
+module.exports = { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor, saveClasification, saveResponse};

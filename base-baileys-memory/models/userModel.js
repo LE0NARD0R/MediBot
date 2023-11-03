@@ -7,6 +7,7 @@ const convSchema = new mongoose.Schema({
   doctor: String,
   role: [String],
   content: [String],  
+  specialty: [String],
   image: [String],
   uploadImage: [String],
   docs: [String],

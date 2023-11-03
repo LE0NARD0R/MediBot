@@ -15,7 +15,7 @@ const {
 
 const BaileysProvider = require("@bot-whatsapp/provider/baileys");
 const MockAdapter = require("@bot-whatsapp/database/mock");
-const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor, saveClasification } = require("./utils");
+const { handlerAI, dataToBase, createMongo, createDate, baseToImg, baseToDoc, confirmateDoctor, saveClasification, saveResponse } = require("./utils");
 const { responseIA, resumeIA, medicResumeIA, clasificationIA} = require("./services/completion");
 const { textToSpeech } = require("./services/polly");
 const Conv = require("./models/userModel");
@@ -30,7 +30,6 @@ const interactions = [
 ];
 const voiceid = ["Lupe", "Penelope", "Miguel"];
 let code = 0;
-let receivedText= ''
 let flowBackTo = ''
 let patient = ''
 
@@ -67,7 +66,7 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
   async (ctx, ctxFn) => {
     try {
       const conversationExists = await Conv.exists({ name: ctx.pushName });
-
+      
       if (conversationExists) {
         await ctxFn.flowDynamic(
           "*MediBot:* Por favor, espera un momento mientras te escucho"
@@ -86,20 +85,16 @@ const flowVoiceNote = addKeyword(EVENTS.VOICE_NOTE).addAction(
       await ctxFn.flowDynamic(userMessage);
       console.log(`🤖 Fin voz a texto....: ${text}`);
 
-      const doctor = await confirmateDoctor(ctx)
-      if (!doctor){
-        flowBackTo = flowTextResponse
-        receivedText = text;
-        ctxFn.gotoFlow(flowPrueba)
-      // }arreeglar esto de aqui se quitó la selección de médico
-      }
       const completeDate = new Date();
       const date = createDate(completeDate);
 
       let specialty = await clasificationIA(text)
       specialty = specialty.data.choices[0].message.content
+      console.log(`La especialidad es: ${specialty}`);
       saveClasification(specialty, ctx)
-      const response = await responseIA(text, ctx, specialty, date);
+      const resp = await responseIA(text, ctx, specialty, date);
+      const response = resp.data.choices[0].message.content
+      saveResponse(response, specialty, ctx)
       const voiceId = getRandomItem(voiceid);
       const path = await textToSpeech(voiceId, response);
 
@@ -197,15 +192,8 @@ const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
         createMongo(ctx)
         await ctxFn.flowDynamic(welcomeMessage);
       }
-      const doctor = await confirmateDoctor(ctx)
 
-      if (!doctor){
-        flowBackTo = flowTextResponse
-        receivedText = ctx.body;
-        ctxFn.gotoFlow(flowPrueba)
-      }else{
-        receivedText = ctx.body;
-      }
+      const receivedText = ctx.body;
 
       //Here we instantiate a Date() object 
       const completeDate = new Date();
@@ -220,9 +208,11 @@ const flowTextResponse = addKeyword(EVENTS.WELCOME).addAction(
       //Finally we are going to send a response to the text request patient
       let specialty = await clasificationIA(receivedText)
       specialty = specialty.data.choices[0].message.content
-      console.log(specialty)
+      console.log('La especialidad de la consulta es: ' + specialty)
       saveClasification(specialty, ctx)
-      const response = await responseIA(receivedText, ctx, specialty, date);
+      const resp = await responseIA(receivedText, ctx, specialty, date);
+      const response = resp.data.choices[0].message.content
+      saveResponse(response, specialty, ctx)
       const voiceId = getRandomItem(voiceid);
       const path = await textToSpeech(voiceId, response);
 
